@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Angular JS</title>
+    <script src="app/lib/angular.min.js"></script>
+    <link rel="stylesheet" href="content/css/style.css">
+    <script src="content/js/app.js"></script>
+    <script src="content/js/controllers.js"></script>
+    <script src="content/js/directives.js"></script>
+
+</head>
+
+<body ng-app="myApp">
+
+    <!-- <div ng-controller="DynamicFormController">
+        <dynamic-form form-definition="formDefinition"></dynamic-form>
+    </div> -->
+
+    <!-- <div ng-controller="DynamicFormController">
+        <form action="">
+            <div ng-repeat="field in formDefinition">
+                <label for="{{field.name}}">{{field.label}}</label>
+                <input type="text" id="{{field.name}}">
+            </div>
+        </form>
+    </div> -->
+
+    <div ng-controller="DynamicFormController">
+
+        <form ng-submit="submitForm()" name="myForm" class="form">
+            <div ng-repeat="field in formDefinition" class="form-field">
+
+                <label>{{ field.label }}</label>
+
+                <div ng-switch="field.type">
+
+                    <!--================== SELECT BOXES ====================-->
+                    <select name="{{field.name}}" id="" ng-switch-when="select" ng-model="formData[field.name]"
+                        ng-required="field.required">
+                        <option value="" selected>Please Select</option>
+                        <option value="{{option.value}}" ng-repeat="option in field.options">{{option.title}}</option>
+                    </select>
+
+                    <!--================== RADIOS ====================-->
+                    <div ng-switch-when="radio">
+                        <!-- <input type="text"> -->
+                        <div class="checkbox-group">
+                            <div ng-repeat="option in field.options">
+                                <input type="radio" id="{{option.value}}" name="{{field.label}}"><label
+                                    for="{{option.value}}">{{option.title}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--================== CHECKBOXES ====================-->
+                    <div ng-switch-when="checkbox">
+                        <div class="checkbox-group">
+                            <div ng-repeat="option in field.options">
+                                <!-- <input type="checkbox" ng-model="formData[field.name][$index]"
+                                    ng-change="checkBox($event, field.name, {{option.value}})" id="{{option.value}}"
+                                    name="{{field.label}}"> -->
+                                <tick obj="{{option.value}}" input-id="{{option.value}}"
+                                    on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
+                                </tick>
+                                <label for="{{option.value}}">{{option.title}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--================== NESTED RADIOS ====================-->
+
+
+                    <!--================== DEFAULT TYPES ====================-->
+                    <input type="{{ field.type }}" placeholder="{{field.placeholder}}" ng-switch-default
+                        ng-model="formData[field.name]" name="{{field.name}}" ng-required="field.required">
+                </div>
+
+                <!--================== ERROR ====================-->
+                <div class="error">
+                    <div ng-if="field.type == 'checkbox' && field.dbType == 'array'">
+                        <p ng-if="field.required && formData[field.name] | isEmpty">
+                            {{field.errorMsg}}
+                        </p>
+                    </div>
+
+                    <div ng-if="field.type == 'checkbox' && field.dbType == 'object'">
+                        <p ng-if="field.required && formData[field.name] | isEmpty">
+                            {{field.errorMsg}}
+                        </p>
+                    </div>
+
+                    <div
+                        ng-if="field.type == 'number' || field.type == 'text' || field.type == 'date' || field.type == 'select'">
+                        <p ng-if="field.required && myForm[field.name].$error.required && myForm[field.name].$touched">
+                            {{field.errorMsg}}
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+
+</body>
+
+</html>

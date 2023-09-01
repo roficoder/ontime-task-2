@@ -1,0 +1,33 @@
+.form{
+  width: min(1280px, 100%);
+  margin: auto;
+  padding-block: 5em;
+}
+
+.form .form-field{
+  margin-block: 1em;
+  display: grid;
+  gap: 0.25em;
+}
+
+.form .form-field label{
+  font-size: 18px;
+
+}
+
+.form .form-field input, select{
+  padding: 0.5em;
+}
+
+
+.checkbox-group{
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.error{
+  font-size: 12px;
+  color: #db2727;
+}

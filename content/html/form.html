@@ -1,0 +1,46 @@
+<form ng-submit="submitForm()" class="form">
+    <div ng-repeat="field in formDefinition" class="form-field">
+
+        <label>{{ field.label }}</label>
+
+        <div ng-switch="field.type">
+
+            <!--================== SELECT BOXES ====================-->
+            <select name="{{field.name}}" id="" ng-switch-when="select" ng-model="formData[field.name]"
+                ng-required="field.required">
+                <option value="" selected>Please Select</option>
+                <option value="{{option.value}}" ng-repeat="option in field.options">{{option.title}}</option>
+            </select>
+
+            <!--================== RADIOS ====================-->
+            <div ng-switch-when="radio">
+                <div class="checkbox-group">
+                    <div ng-repeat="option in field.options">
+                        <input type="radio" id="{{option.value}}" name="{{field.label}}"><label
+                            for="{{option.value}}">{{option.title}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!--================== CHECKBOXES ====================-->
+            <div ng-switch-when="checkbox">
+                <div class="checkbox-group">
+                    <div ng-repeat="option in field.options">
+                        <input type="checkbox" ng-model="formData[field.name][$index]" ng-change="checkBox($event)"
+                            id="{{option.value}}" name="{{field.label}}"><label
+                            for="{{option.value}}">{{option.title}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <!--================== NESTED RADIOS ====================-->
+
+
+            <!--================== DEFAULT TYPES ====================-->
+            <input type="{{ field.type }}" placeholder="{{field.placeholder}}" ng-switch-default
+                ng-model="formData[field.name]" ng-required="field.required">
+        </div>
+
+    </div>
+    <button type="submit">Submit</button>
+</form>
