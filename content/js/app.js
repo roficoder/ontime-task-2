@@ -2,103 +2,39 @@ var app = angular.module('myApp', []);
 
 app.controller('DynamicFormController', function ($scope, $http) {
     $scope.formData = {};
+    $scope.formDefinition = []
 
-    $scope.submitForm = function () {
-        // Handle form submission here
-        console.log($scope.formData);
-    };
+    const url = 'db/data.json'
+    $http.get(url)
+        .then(function (response) {
+            $scope.formDefinition = response.data
+            $scope.makeArrData($scope.formDefinition)
+        })
+        .catch(function (error) {
+            console.error('Error fetching JSON data:', error);
+        });
 
-    // $http.get('./data.json')
-    //     .then(function (response) {
-    //         // $scope.data = response.data;
-    //         console.log(response.data);
-    //     })
-    //     .catch(function (error) {
-    //         console.error('Error fetching data:', error);
-    //     });
 
-    $scope.formDefinition = [
-        {
-            type: 'date',
-            label: 'Visit Date',
-            name: 'visit_date',
-            required: true,
-            errorMsg: 'Please select a specific date'
-        },
-        {
-            type: 'select',
-            label: 'Assesment Type',
-            name: 'assesment_type',
-            required: true,
-            errorMsg: 'Please select one of the following assesesment type',
+    $scope.selectedRadios = {};
+    $scope.subFields = {};
+    $scope.checkBoxSubs = {};
 
-            options: [
-                {
-                    "title": "Initial Assessment",
-                    "value": "initial_assessment"
-                },
-                {
-                    "title": "Re-Assessment",
-                    "value": "re_assessment"
-                },
-                {
-                    "title": "PRN",
-                    "value": "prn"
-                }
-            ]
-        },
-        {
-            type: 'radio',
-            label: 'Assessment Conducted',
-            name: 'assessment_conducted',
-            options: [
-                { title: 'Field', value: 'field' },
-                { title: 'Telephonic', value: 'telephonic' }
-            ]
-        },
-        {
-            type: 'checkbox',
-            label: 'Covid Screening',
-            name: 'covid_screening',
-            dbType: 'array',
-            required: true,
-            errorMsg: 'Covid Screening is required',
+    $scope.makeArrData = function (data) {
 
-            options: [
-                { title: 'RN Self screened', value: 'rn_self_screened' },
-                { title: 'Completed with Patient', value: 'completed_with_patient' },
-                { title: 'Completed With Aide', value: 'completed_with_aide' },
-                { title: 'N/A Telephonic', value: 'na_telephonic' },
-            ]
-        },
-        {
-            type: 'checkbox',
-            label: 'Testing Obj',
-            name: 'testing_obj',
-            dbType: 'object',
-            required: true,
-            errorMsg: 'Testing Obj is required',
-            options: [
-                { title: 'One', key: 'One', value: 'one' },
-                { title: 'Two', key: 'Second', value: 'two' },
-            ]
-        },
-    ];
-
-    $scope.formDefinition.forEach(item => {
-        if (item.options && item.dbType == 'array')
-            $scope.formData[item.name] = []
-        else if (item.options && item.dbType == 'object')
-            $scope.formData[item.name] = {}
-        else if (item.type == 'text' || item.type == 'date' || item.type == 'select')
-            $scope.formData[item.name] = ''
-        else if (item.type == 'number')
-            $scope.formData[item.name] = 0
-    })
+        data.forEach(item => {
+            if (item.options && item.dbType == 'array')
+                $scope.formData[item.name] = []
+            else if (item.options && item.dbType == 'object')
+                $scope.formData[item.name] = {}
+            else if (item.type == 'text' || item.type == 'date' || item.type == 'select')
+                $scope.formData[item.name] = ''
+            else if (item.type == 'number')
+                $scope.formData[item.name] = 0
+        })
+    }
 
     $scope.handleCheckboxChange = function (value, type, field, option) {
         const arr = $scope.formData[field];
-        console.log(value, field, option);
         if (type == 'array') {
             const index = arr.indexOf(option.value);
             if (index != -1) {
@@ -108,15 +44,47 @@ app.controller('DynamicFormController', function ($scope, $http) {
             }
         }
         else if (type == 'object') {
-            if (option.key in arr) {
-                delete arr[option.key]
+            if (option.value in arr) {
+                delete arr[option.value]
             } else {
-                arr[option.key] = option.value
+                arr[option.value] = option.value
             }
         }
 
-        console.log(arr);
+        const checkBoxArr = $scope.checkBoxSubs;
+        if (option.value in checkBoxArr)
+            delete checkBoxArr[option.value];
+        else
+            $scope.checkBoxSubs[option.value] = value;
+
+        console.log($scope.checkBoxSubs, option);
     }
+
+    $scope.subFieldChanged = function (groupName, value) {
+        $scope.subFields[groupName] = value;
+        console.log($scope.subFields);
+    }
+
+    $scope.checkBoxSubChanged = function (groupName, value) {
+        $scope.checkBoxSubs[groupName] = value;
+        console.log($scope.checkBoxSubs);
+    }
+
+
+    $scope.radioChanged = function (groupName, value, test) {
+        $scope.selectedRadios[groupName] = value;
+        console.log($scope.selectedRadios);
+    };
+
+    // , type, field, option
+    $scope.handleRadioChange = function (value) {
+        console.log(value);
+    }
+
+    $scope.submitForm = function () {
+        const obj = { ...$scope.formData, ...$scope.selectedRadios, ...$scope.subFields }
+        console.log(obj);
+    };
 });
 
 
@@ -173,13 +141,37 @@ app.directive('tick', function () {
         },
 
         link: function (scope) {
-            console.log(scope.obj);
+            // console.log(scope.obj);
         },
 
     }
 
 })
 
+app.directive('radio', function () {
+    return {
+        restrict: 'E',
+        template: '<input type="radio" ng-model="model" id="{{inputId}}" name={{name}} ng-change="radioChanged()"/>',
+        scope: {
+            obj: '@',
+            inputId: '@',
+            name: '@',
+            onRadioChange: '&',
+        },
+
+        controller: function ($scope) {
+            $scope.model;
+
+            console.log($scope.obj);
+
+            $scope.radioChanged = function () {
+                $scope.onRadioChange({ value: $scope.obj });
+                console.log("Some");
+            };
+
+        }
+    }
+})
 
 app.filter('isEmpty', function () {
     return function (input) {

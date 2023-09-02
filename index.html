@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angular JS</title>
-    <script src="app/lib/angular.min.js"></script>
+    <script src="app/angular.min.js"></script>
     <link rel="stylesheet" href="content/css/style.css">
     <script src="content/js/app.js"></script>
     <script src="content/js/controllers.js"></script>
@@ -49,8 +49,15 @@
                         <!-- <input type="text"> -->
                         <div class="checkbox-group">
                             <div ng-repeat="option in field.options">
-                                <input type="radio" id="{{option.value}}" name="{{field.label}}"><label
-                                    for="{{option.value}}">{{option.title}}</label>
+                                <input type="radio" ng-model="selectedRadios[field.name]"
+                                    ng-change="radioChanged(field.name, selectedRadios[field.name])" id="{{option.id}}"
+                                    ng-value="option.value" name="{{field.label}}">
+                                <label for="{{option.id}}">{{option.title}}</label>
+                                <div ng-if="selectedRadios[field.name] === option.value && option.subfield">
+                                    <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
+                                        ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
+                                        placeholder="{{option.subfield.placeholder}}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,6 +73,11 @@
                                     on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
                                 </tick>
                                 <label for="{{option.value}}">{{option.title}}</label>
+                                <div ng-if="checkBoxSubs[option.value] === option.value && option.subfield">
+                                    <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
+                                        ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
+                                        placeholder="{{option.subfield.placeholder}}">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +91,7 @@
                 </div>
 
                 <!--================== ERROR ====================-->
-                <div class="error">
+                <!-- <div class="error">
                     <div ng-if="field.type == 'checkbox' && field.dbType == 'array'">
                         <p ng-if="field.required && formData[field.name] | isEmpty">
                             {{field.errorMsg}}
@@ -99,12 +111,13 @@
                         </p>
                     </div>
 
-                </div>
+                </div> -->
 
             </div>
             <button type="submit">Submit</button>
         </form>
     </div>
+
 
 
 </body>

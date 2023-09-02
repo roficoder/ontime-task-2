@@ -1,0 +1,249 @@
+[
+    {
+        "type": "date",
+        "label": "Visit Date",
+        "name": "visit_date",
+        "errorMsg": "Please select a specific date"
+    },
+    {
+        "type": "select",
+        "label": "Assesment Type",
+        "name": "assesment_type",
+        "errorMsg": "Please select one of the following assesesment type",
+        "options": [
+            {
+                "title": "Initial Assessment",
+                "value": "initial_assessment"
+            },
+            {
+                "title": "Re-Assessment",
+                "value": "re_assessment"
+            },
+            {
+                "title": "PRN",
+                "value": "prn"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Assessment Conducted",
+        "name": "assessment_conducted",
+        "options": [
+            {
+                "title": "Field",
+                "value": "field"
+            },
+            {
+                "title": "Telephonic",
+                "value": "telephonic"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Covid Screening",
+        "name": "covid_screening",
+        "dbType": "array",
+        "required": true,
+        "errorMsg": "Covid Screening is required",
+        "options": [
+            {
+                "title": "RN Self screened",
+                "value": "rn_self_screened"
+            },
+            {
+                "title": "Completed with Patient",
+                "value": "completed_with_patient"
+            },
+            {
+                "title": "Completed With Aide",
+                "value": "completed_with_aide"
+            },
+            {
+                "title": "N/A Telephonic",
+                "value": "na_telephonic"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Covid Vaccine Status",
+        "name": "covid_vaccine",
+        "options": [
+            {
+                "title": "Yes - Date if known",
+                "value": "yes",
+                "id": "covid_vaccine_yes",
+                "subfield": {
+                    "type": "date",
+                    "label": "",
+                    "name": "covid_vaccine_date"
+                }
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "covid_vaccine_no"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "HX of Covid",
+        "name": "hx_covid",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "hx_covid_yes"
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "hx_covid_no"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Aide",
+        "name": "aide",
+        "dbType": "object",
+        "required": true,
+        "errorMsg": "Covid Screening is required",
+        "options": [
+            {
+                "title": "Present during assessment",
+                "value": "preseent_during_assessment"
+            },
+            {
+                "title": "Not Present",
+                "value": "not_present",
+                "subfield": {
+                    "type": "text",
+                    "name": "aide_not_present_reason",
+                    "placeholder": "Reason for not presenting"
+                }
+            },
+            {
+                "title": "Ontime notified",
+                "value": "aide_notified"
+            },
+            {
+                "title": "Ontime already aware",
+                "value": "aide_already_aware"
+            },
+            {
+                "title": "Aide Supervision Done Telephonically",
+                "value": "done_with_supervisor"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "required": true,
+        "label": "Aide Covide Screening Education Complete",
+        "options": [
+            {
+                "title": "Please make sure to check this",
+                "value": "aide_educ_complete"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Languages",
+        "options": [
+            {
+                "title": "English",
+                "value": "english",
+                "id": "english"
+            },
+            {
+                "title": "Spanish",
+                "value": "spanish",
+                "id": "spanish"
+            },
+            {
+                "title": "Other",
+                "value": "other_language",
+                "id": "other",
+                "subfield": {
+                    "type": "text",
+                    "name": "other_language_text",
+                    "value": "other_language_text",
+                    "placeholder": "Type here ..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "text",
+        "label": "Emergency Contact Name",
+        "name": "emergency_contact_name",
+        "placeholder": "Emergency Contact Name"
+    },
+    {
+        "type": "text",
+        "content": "phone",
+        "label": "Emergency Contact Number",
+        "name": "emergency_contact_number",
+        "placeholder": "Emergency Contact Number"
+    },
+    {
+        "type": "radio",
+        "label": "Emergency contact relationship",
+        "name": "emergency_contact_relation",
+        "options": [
+            {
+                "title": "Relative",
+                "value": "relative",
+                "id": "emergency_contact_relative"
+            },
+            {
+                "title": "Spouse",
+                "value": "spouse",
+                "id": "emergency_contact_spouse"
+            },
+            {
+                "title": "Friend",
+                "value": "friend",
+                "id": "emergency_contact_friend"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Lives with",
+        "name": "live_with",
+        "options": [
+            {
+                "title": "Alone",
+                "value": "alone",
+                "id": "alone"
+            },
+            {
+                "title": "Spouse",
+                "value": "spouse",
+                "id": "spouse"
+            },
+            {
+                "title": "Friend",
+                "value": "friend",
+                "id": "friend"
+            },
+            {
+                "title": "Other",
+                "value": "other",
+                "id": "other",
+                "subfield": {
+                    "type": "text",
+                    "name": "lives_with_other",
+                    "value": "lives_with_other",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    }
+]
