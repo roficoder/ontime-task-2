@@ -64,16 +64,34 @@
 
                     <!--================== CHECKBOXES ====================-->
                     <div ng-switch-when="checkbox">
+                        <div class="oneselector" ng-if="field.oneSelector">
+                            <input type="{{field.oneSelector.type}}" id="{{field.oneSelector.id}}"
+                                placeholder="{{field.oneSelector.placeholder}}" ng-value="{{field.oneSelector.value}}"
+                                ng-model="oneSelectors[field.oneSelector.id]"
+                                ng-change="oneSelectorChanged(field.oneSelector.id, oneSelectors[field.oneSelector.id], field.options)">
+                            <label for="{{field.oneSelector.id}}">{{field.oneSelector.label}}</label>
+                            <hr><br>
+                        </div>
+
                         <div class="checkbox-group">
                             <div ng-repeat="option in field.options">
                                 <!-- <input type="checkbox" ng-model="formData[field.name][$index]"
                                     ng-change="checkBox($event, field.name, {{option.value}})" id="{{option.value}}"
                                     name="{{field.label}}"> -->
-                                <tick obj="{{option.value}}" input-id="{{option.value}}"
-                                    on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
-                                </tick>
-                                <label for="{{option.value}}">{{option.title}}</label>
-                                <div ng-if="checkBoxSubs[option.value] === option.value && option.subfield">
+
+                                <div class="option" ng-if="!option.showwhen || showSibs[option.id]== option.id">
+                                    <tick obj="{{option.value}}" do-disable="{{oneSelectors[field.oneSelector.id]}}"
+                                        input-id="{{option.id}}"
+                                        on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
+                                    </tick>
+
+                                    <!-- <input type="checkbox" id="{{option.id}}" ng-model="checkBoxes[option.value]"
+                                        ng-change="handleCheckboxChange('', field.dbType, field.name, option)"> -->
+                                    <label for="{{option.id}}">{{option.title}}</label>
+                                </div>
+
+                                <!--SUB FIELDS-->
+                                <div ng-if="checkBoxSubs[option.id] === option.id && option.subfield">
                                     <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
                                         ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
                                         placeholder="{{option.subfield.placeholder}}">

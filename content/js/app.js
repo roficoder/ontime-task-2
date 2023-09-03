@@ -18,6 +18,9 @@ app.controller('DynamicFormController', function ($scope, $http) {
     $scope.selectedRadios = {};
     $scope.subFields = {};
     $scope.checkBoxSubs = {};
+    $scope.checkBoxes = {}
+    $scope.showSibs = {};
+    $scope.oneSelectors = {}
 
     $scope.makeArrData = function (data) {
 
@@ -51,13 +54,47 @@ app.controller('DynamicFormController', function ($scope, $http) {
             }
         }
 
-        const checkBoxArr = $scope.checkBoxSubs;
-        if (option.value in checkBoxArr)
-            delete checkBoxArr[option.value];
+        const checkBoxArr = $scope.checkBoxes;
+        if (option.id in checkBoxArr)
+            delete checkBoxArr[option.id];
         else
-            $scope.checkBoxSubs[option.value] = value;
+            checkBoxArr[option.id] = option.id;
 
-        console.log($scope.checkBoxSubs, option);
+        console.log(checkBoxArr);
+
+        const checkBoxSubsArr = $scope.checkBoxSubs;
+        if (option.id in checkBoxSubsArr)
+            delete checkBoxSubsArr[option.id];
+        else
+            checkBoxSubsArr[option.id] = option.id;
+
+        const showSibs = $scope.showSibs;
+        if (option.siblings) {
+            const sibs = option.siblings.split(',');
+            sibs.forEach(sib => {
+                if (sib in showSibs)
+                    delete showSibs[sib];
+                else
+                    $scope.showSibs[sib] = sib;
+            })
+
+        }
+    }
+
+
+    $scope.oneSelectorChanged = function (groupName, value, options) {
+        $scope.oneSelectors[groupName] = value;
+        console.log(options, $scope.oneSelectors);
+        // if ($scope.oneSelectors[groupName]) {
+
+        //     options.forEach((option => {
+        //         option['disabled'] = true
+        //     }))
+        // } else {
+        //     options.forEach((option => {
+        //         option['disabled'] = false
+        //     }))
+        // }
     }
 
     $scope.subFieldChanged = function (groupName, value) {
@@ -125,24 +162,30 @@ app.controller('DynamicFormController', function ($scope, $http) {
 app.directive('tick', function () {
     return {
         restrict: 'E',
-        template: '<input type="checkbox" ng-model="model" id="{{inputId}}" ng-change="checkboxChanged()"/>',
+        template: '<input type="checkbox" ng-model="model" id="{{inputId}}" ng-disabled="disabled" ng-change="checkboxChanged()"/>',
         scope: {
             obj: '@',
             inputId: '@',
+            doDisable: '@',
             onCheckboxChange: '&',
         },
         controller: function ($scope) {
-
-            $scope.model;
+            $scope.disabled = false;
+            $scope.model = false;
 
             $scope.checkboxChanged = function () {
                 $scope.onCheckboxChange({ value: $scope.obj });
+                console.log($scope.disabled);
             };
         },
 
         link: function (scope) {
-            // console.log(scope.obj);
-        },
+            scope.$watch('doDisable', function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    scope.disabled = scope.$eval(newVal);
+                }
+            });
+        }
 
     }
 
@@ -169,7 +212,9 @@ app.directive('radio', function () {
                 console.log("Some");
             };
 
-        }
+        },
+
+
     }
 })
 

@@ -168,7 +168,7 @@
             {
                 "title": "Other",
                 "value": "other_language",
-                "id": "other",
+                "id": "other_language",
                 "subfield": {
                     "type": "text",
                     "name": "other_language_text",
@@ -235,12 +235,613 @@
             },
             {
                 "title": "Other",
-                "value": "other",
-                "id": "other",
+                "value": "lives_with_other",
+                "id": "lives_with_other",
                 "subfield": {
                     "type": "text",
                     "name": "lives_with_other",
                     "value": "lives_with_other",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Pets",
+        "name": "pets",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "pets_yes",
+                "subfield": {
+                    "type": "text",
+                    "name": "pets_type",
+                    "value": "pets_type",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "pets_no"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "DNR",
+        "name": "dnr",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "dnr_yes"
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "dnr_no"
+            },
+            {
+                "title": "Unknown",
+                "value": "unknown",
+                "id": "pets_unknown"
+            }
+        ]
+    },
+    {
+        "type": "text",
+        "label": "Hospice Name",
+        "name": "hospice_name",
+        "placeholder": "Hospice Name"
+    },
+    {
+        "type": "text",
+        "content": "phone",
+        "label": "Hospice Number",
+        "name": "hospice_number",
+        "placeholder": "Hospice Number"
+    },
+    {
+        "type": "radio",
+        "label": "Can patient be left alone ? ",
+        "name": "can_patient_be_alone",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "can_patient_be_alone_yes"
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "can_patient_be_alone_no"
+            }
+        ]
+    },
+    {
+        "heading": "Neurological",
+        "type": "checkbox",
+        "label": "BP",
+        "name": "bp",
+        "options": [
+            {
+                "title": "Enter Value",
+                "value": "enter_value_bp",
+                "id": "enter_name_bp",
+                "subfield": {
+                    "type": "text",
+                    "name": "bp_value",
+                    "value": "bp_value",
+                    "placeholder": "Enter Value"
+                }
+            },
+            {
+                "title": "UTO - Telephonic",
+                "value": "uto_telephonic",
+                "id": "uto_telephonic_bp"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "TEMP",
+        "name": "temperature",
+        "options": [
+            {
+                "title": "Enter Value",
+                "value": "enter_value_temp",
+                "id": "enter_value_temp",
+                "siblings": "oral,tympanic",
+                "subfield": {
+                    "type": "text",
+                    "name": "temp_value",
+                    "value": "temp_value",
+                    "placeholder": "Enter Value"
+                }
+            },
+            {
+                "title": "Oral",
+                "value": "oral",
+                "id": "oral_temp",
+                "showwhen": "temp_value"
+            },
+            {
+                "title": "Tympanic",
+                "value": "tympanic",
+                "id": "tympanic",
+                "showwhen": "temp_value"
+            },
+            {
+                "title": "UTO - Telephonic",
+                "value": "uto_telephonic",
+                "id": "uto_telephonic_temp"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Weight",
+        "name": "weight",
+        "options": [
+            {
+                "title": "Enter Value",
+                "value": "enter_value_weight",
+                "id": "enter_value_weight",
+                "siblings": "reported,actual",
+                "subfield": {
+                    "type": "text",
+                    "name": "weight_value",
+                    "value": "weight_value",
+                    "placeholder": "Enter Value"
+                }
+            },
+            {
+                "title": "Reported",
+                "value": "reported",
+                "id": "reported_weight",
+                "showwhen": "enter_value_weight"
+            },
+            {
+                "title": "Actual",
+                "value": "actual",
+                "id": "weight_actual",
+                "showwhen": "enter_value_weight"
+            },
+            {
+                "title": "UTO - Telephonic",
+                "value": "uto_telephonic",
+                "id": "uto_telephonic_weight"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Grasp Right",
+        "name": "grasp_right",
+        "options": [
+            {
+                "title": "Equal",
+                "value": "equal",
+                "id": "grasp_right_equal"
+            },
+            {
+                "title": "Not Equal",
+                "value": "not_equal",
+                "id": "grasp_right_not",
+                "subfield": {
+                    "type": "text",
+                    "name": "grasp_right_not_equal",
+                    "value": "grasp_right_not_equal",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "UTO Telephonic",
+                "value": "uto_telephonic",
+                "id": "grasp_right_uto"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Grasp Left",
+        "name": "grasp_left",
+        "options": [
+            {
+                "title": "Equal",
+                "value": "equal",
+                "id": "grasp_left_equal"
+            },
+            {
+                "title": "Not Equal",
+                "value": "not_equal",
+                "id": "grasp_left_not",
+                "subfield": {
+                    "type": "text",
+                    "name": "grasp_left_not_equal",
+                    "value": "grasp_left_not_equal",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "UTO Telephonic",
+                "value": "uto_telephonic",
+                "id": "grasp_left_uto"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Neurological",
+        "name": "neurological",
+        "dbType": "array",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "neurological_wnl"
+        },
+        "options": [
+            {
+                "title": "Headache",
+                "value": "headache",
+                "id": "headache"
+            },
+            {
+                "title": "Vertigo",
+                "value": "vertigo",
+                "id": "vertigo"
+            },
+            {
+                "title": "Weakness",
+                "value": "weakness",
+                "id": "weakness"
+            },
+            {
+                "title": "Seizures",
+                "value": "seizures",
+                "id": "seizures"
+            },
+            {
+                "title": "Paralysis",
+                "value": "paralysis",
+                "id": "paralysis",
+                "subfield": {
+                    "type": "text",
+                    "name": "neurological_paralysis",
+                    "value": "neurological_paralysis",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Other",
+                "value": "other",
+                "id": "other",
+                "subfield": {
+                    "type": "text",
+                    "name": "neurological_other",
+                    "value": "neurological_other",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "neurological_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "neurological_comments",
+                    "value": "neurological_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Cardiopulmonary",
+        "dbType": "array",
+        "name": "hearing",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "cardiopulmonary_wnl"
+        },
+        "options": [
+            {
+                "title": "Pace Maker",
+                "value": "pace_maker",
+                "id": "pace_maker"
+            },
+            {
+                "title": "Oxygen specify in liters/min",
+                "value": "oxygen",
+                "id": "cardiopulmonary_oxygen",
+                "subfield": {
+                    "type": "text",
+                    "name": "cardiopulmonary_oxygen_value",
+                    "value": "cardiopulmonary_oxygen_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "cardiopulmonary_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "cardiopulmonary_comments",
+                    "value": "cardiopulmonary_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Vision",
+        "name": "vision",
+        "dbType": "array",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "vision_wnl"
+        },
+        "options": [
+            {
+                "title": "Legaly Blind",
+                "value": "legally_blind",
+                "id": "vision_legally_blind"
+            },
+            {
+                "title": "Glasses",
+                "value": "glasses",
+                "id": "vision_glasses"
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "vision_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "vision_comments",
+                    "value": "vision_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Hearing",
+        "name": "hearing",
+        "dbType": "array",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "hearing_wnl"
+        },
+        "options": [
+            {
+                "title": "Heard of Hearing",
+                "value": "heard_of_hearing",
+                "id": "hearing_heard_of_hearing"
+            },
+            {
+                "title": "Deaf",
+                "value": "deaf",
+                "id": "hearing_deaf"
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "hearing_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "hearing_comments",
+                    "value": "hearing_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Musculoskeletal",
+        "name": "musculoskeletal",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "musculoskeletal_wnl"
+        },
+        "dbType": "array",
+        "options": [
+            {
+                "title": "Decreased Mobility",
+                "value": "decreased_mobility",
+                "id": "musculoskeletal_decreased_mobility"
+            },
+            {
+                "title": "Weakness",
+                "value": "weakness",
+                "id": "musculoskeletal_weakness"
+            },
+            {
+                "title": "Amputation - Specifiy Location",
+                "value": "amputation",
+                "id": "musculoskeletal_amputation",
+                "subfield": {
+                    "type": "text",
+                    "name": "musculoskeletal_amputation_location",
+                    "value": "musculoskeletal_amputation_location",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "musculoskeletal_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "musculoskeletal_comments",
+                    "value": "musculoskeletal_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Endocrine",
+        "name": "endocrine",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "endocrine_wnl"
+        },
+        "dbType": "array",
+        "options": [
+            {
+                "title": "Insuline Coverage",
+                "value": "insulin_coverage",
+                "id": "endocrine_insulin_coverage"
+            },
+            {
+                "title": "BG Level : Please specify (Reported/Actual)",
+                "value": "bg_level",
+                "id": "endocrine_bg_level",
+                "subfield": {
+                    "type": "text",
+                    "name": "bg_level_value",
+                    "value": "bg_level_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "BG Level Performed By",
+                "value": "bg_level_performed_by",
+                "id": "endocrine_bg_level_performer",
+                "subfield": {
+                    "type": "text",
+                    "name": "bg_level_performer_value",
+                    "value": "bg_level_performer_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Other",
+                "value": "other",
+                "id": "endocrine_other",
+                "subfield": {
+                    "type": "text",
+                    "name": "endocrine_other_value",
+                    "value": "endocrine_other_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "endocrine_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "endocrine_comments",
+                    "value": "endocrine_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Gastrointestinal",
+        "name": "gastrointestinal",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "gastrointestinal_wnl"
+        },
+        "dbType": "array",
+        "options": [
+            {
+                "title": "Inconsistent: Bowel",
+                "value": "inconsistent_bowel",
+                "id": "gastrointestinal_inconsistent_bowel"
+            },
+            {
+                "title": "Constipation: Last Date",
+                "value": "constipation",
+                "id": "gastrointestinal_constipation",
+                "subfield": {
+                    "type": "date",
+                    "name": "constipation_date",
+                    "value": "constipation_date",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Other",
+                "value": "other",
+                "id": "gastrointestinal_other",
+                "subfield": {
+                    "type": "text",
+                    "name": "gastrointestinal_other_value",
+                    "value": "gastrointestinal_other_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "gastrointestinal_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "gastrointestinal_comments",
+                    "value": "gastrointestinal_comments_value",
+                    "placeholder": "Type here..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Oral",
+        "name": "oral",
+        "oneSelector": {
+            "type": "checkbox",
+            "label": "WNL (No issues of needs identified)",
+            "value": "wnl",
+            "id": "oral_wnl"
+        },
+        "dbType": "array",
+        "options": [
+            {
+                "title": "Dentures",
+                "value": "dentures",
+                "id": "oral_dentures"
+            },
+            {
+                "title": "Bleeding Gums",
+                "value": "bleeding_gums",
+                "id": "oral_bleeding_gums"
+            },
+            {
+                "title": "Comments",
+                "value": "comments",
+                "id": "oral_comments",
+                "subfield": {
+                    "type": "text",
+                    "name": "oral_comments",
+                    "value": "oral_comments_value",
                     "placeholder": "Type here..."
                 }
             }
