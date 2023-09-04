@@ -16,10 +16,10 @@
 
 .form .form-field label{
   font-size: 14px;
-
+  line-height: 1;
 }
 
-.form .form-field input, select{
+.form .form-field input[type="text"], input[type="number"], select{
   padding: 0.5em;
 }
 
@@ -35,6 +35,14 @@
   grid-template-columns: repeat(auto-fit, minmax(300px ,1fr));
   row-gap: 1em;
 }
+
+.checkbox-group .option{
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  /* height: 16px; */
+}
+
 
 .error{
   font-size: 12px;
@@ -60,8 +68,12 @@ input{
 }
 
 input[type="text"].subfield, 
-input[type="number"].subfield{
+input[type="number"].subfield,
+select.subfield
+{
   border-bottom: thin solid rgba(128, 128, 128, 0.616);
+  width: min(100%, 300px);
+  margin-top: 0.25em;
 }
 
 .line{
@@ -69,4 +81,14 @@ input[type="number"].subfield{
   height: 1px;
   border-bottom: thin solid var(--main);
   margin-block: 0.5em 1em;
+}
+
+
+input[type="checkbox"],
+input[type="radio"]{
+  margin: 0;
+  width: 15px;
+  height: 15px;
+  accent-color: seagreen;
+  line-height: 1;
 }

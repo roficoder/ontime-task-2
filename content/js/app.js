@@ -1,5 +1,7 @@
 var app = angular.module('myApp', []);
 
+
+
 app.controller('DynamicFormController', function ($scope, $http) {
     $scope.formData = {};
     $scope.formDefinition = []
@@ -13,7 +15,6 @@ app.controller('DynamicFormController', function ($scope, $http) {
         .catch(function (error) {
             console.error('Error fetching JSON data:', error);
         });
-
 
     $scope.selectedRadios = {};
     $scope.subFields = {};
@@ -84,6 +85,8 @@ app.controller('DynamicFormController', function ($scope, $http) {
 
 
         const checkBoxArr = $scope.checkBoxes;
+        const subFields = $scope.subFields;
+
         if (option.id in checkBoxArr)
             delete checkBoxArr[option.id];
         else
@@ -92,11 +95,13 @@ app.controller('DynamicFormController', function ($scope, $http) {
         const checkBoxSubsArr = $scope.checkBoxSubs;
         if (option.id in checkBoxSubsArr) {
             delete checkBoxSubsArr[option.id];
-            $scope.subFieldChanged(option.subfield.name, '', true)
+            if (option.subfield?.name in subFields)
+                $scope.subFieldChanged(option.subfield?.name, '', true)
         }
         else {
             checkBoxSubsArr[option.id] = option.id;
-            $scope.subFieldChanged(option.subfield.name)
+            if (option.subfield?.name in subFields)
+                $scope.subFieldChanged(option.subfield?.name)
         }
 
         const showSibs = $scope.showSibs;
@@ -135,12 +140,7 @@ app.controller('DynamicFormController', function ($scope, $http) {
         else
             subFields[groupName] = value ? value : '';
 
-        // if (groupName in showSibs)
-        //     delete showSibs[groupName];
-        // else
-        //     showSibs[groupName] = value ? value : '';
-
-        console.log(subFields);
+        // console.log(subFields);
     }
 
     $scope.checkBoxSubChanged = function (groupName, value) {
@@ -152,13 +152,31 @@ app.controller('DynamicFormController', function ($scope, $http) {
         // const index of 
     }
 
-    $scope.radioChanged = function (fieldName, option) {
+    $scope.radioChanged = function (fieldName, option, value) {
+
+        console.log(value);
+
         const previousRadio = $scope.previousRadio;
+        const radioFields = $scope.selectedRadios;
+
+        // if (fieldName in radioFields) {
+        //     delete radioFields[fieldName];
+        //     $scope.subFieldChanged(previousRadio[fieldName], '', true)
+        // } else {
+        //     radioFields[fieldName] = value
+        //     if (option.subfield) {
+        //         $scope.subFieldChanged(option.subfield.name)
+        //         previousRadio[fieldName] = option.subfield.name
+        //     }
+        // }
+
         if (option.subfield) {
-            $scope.subFieldChanged(option.subfield.name)
-            previousRadio[fieldName] = option.subfield.name
-        } else
+            $scope.subFieldChanged(option.subfield?.name)
+            previousRadio[fieldName] = option.subfield?.name
+        } else {
             $scope.subFieldChanged(previousRadio[fieldName], '', true)
+        }
+
     };
 
     // , type, field, option
@@ -170,6 +188,11 @@ app.controller('DynamicFormController', function ($scope, $http) {
         const obj = { ...$scope.formData, ...$scope.selectedRadios, ...$scope.subFields }
         console.log(obj);
     };
+
+    document.body.addEventListener('click', () => {
+        console.clear()
+        $scope.submitForm()
+    })
 });
 
 
@@ -177,11 +200,12 @@ app.controller('DynamicFormController', function ($scope, $http) {
 app.directive('tick', function () {
     return {
         restrict: 'E',
-        template: '<input type="checkbox" ng-model="model" id="{{inputId}}" ng-disabled="disabled" ng-change="checkboxChanged()"/>',
+        template: '<input type="checkbox" ng-model="model" ng-checked="checked" id="{{inputId}}" ng-disabled="disabled" ng-change="checkboxChanged()"/>',
         scope: {
             obj: '@',
             inputId: '@',
             doDisable: '@',
+            checked: '@',
             onCheckboxChange: '&',
         },
         controller: function ($scope) {

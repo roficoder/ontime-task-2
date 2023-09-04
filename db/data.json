@@ -117,6 +117,7 @@
         "type": "radio",
         "label": "HX of Covid",
         "name": "hx_covid",
+        "id": "hx_covid",
         "options": [
             {
                 "title": "Yes",
@@ -131,7 +132,7 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radio",
         "label": "Aide",
         "name": "aide",
         "dbType": "object",
@@ -179,7 +180,8 @@
             {
                 "title": "Please make sure to check this",
                 "value": "aide_educ_complete",
-                "id": "aide_educ_complete"
+                "id": "aide_educ_complete",
+                "checked": true
             }
         ]
     },
@@ -308,10 +310,16 @@
                 "value": "yes",
                 "id": "pets_yes",
                 "subfield": {
-                    "type": "text",
+                    "type": "select",
                     "name": "pets_type",
                     "value": "pets_type",
-                    "placeholder": "Type here..."
+                    "placeholder": "Type here...",
+                    "options": [
+                        {
+                            "title": "Dogs",
+                            "value": "dogs"
+                        }
+                    ]
                 }
             },
             {
