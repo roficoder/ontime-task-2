@@ -27,15 +27,15 @@
             </div>
         </form>
     </div> -->
-
     <div ng-controller="DynamicFormController">
+
 
         <form ng-submit="submitForm()" name="myForm" class="form">
             <div ng-repeat="field in formDefinition" class="form-field">
 
                 <h3 ng-if="field.heading">{{field.heading}}</h3>
 
-                <label>{{ field.label }}</label>
+                <h3 class="field-label">{{ field.label }}</h3>
 
                 <div ng-switch="field.type">
 
@@ -60,7 +60,8 @@
 
 
                                 <div ng-if="selectedRadios[field.name] === option.value && option.subfield">
-                                    <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
+                                    <input class="subfield" type="{{option.subfield.type}}"
+                                        ng-model="subFields[option.subfield.name]"
                                         ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
                                         placeholder="{{option.subfield.placeholder}}">
                                 </div>
@@ -99,7 +100,8 @@
 
                                 <!--SUB FIELDS-->
                                 <div ng-if="checkBoxSubs[option.id] === option.id && option.subfield">
-                                    <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
+                                    <input type="{{option.subfield.type}}" class="subfield"
+                                        ng-model="subFields[option.subfield.name]"
                                         ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
                                         placeholder="{{option.subfield.placeholder}}">
                                 </div>
@@ -154,6 +156,7 @@
 
                 </div> -->
 
+                <div class="line"></div>
             </div>
             <button type="submit">Submit</button>
         </form>

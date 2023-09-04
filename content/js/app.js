@@ -90,10 +90,14 @@ app.controller('DynamicFormController', function ($scope, $http) {
             checkBoxArr[option.id] = option.id;
 
         const checkBoxSubsArr = $scope.checkBoxSubs;
-        if (option.id in checkBoxSubsArr)
+        if (option.id in checkBoxSubsArr) {
             delete checkBoxSubsArr[option.id];
-        else
+            $scope.subFieldChanged(option.subfield.name, '', true)
+        }
+        else {
             checkBoxSubsArr[option.id] = option.id;
+            $scope.subFieldChanged(option.subfield.name)
+        }
 
         const showSibs = $scope.showSibs;
         if (option.siblings) {
@@ -124,9 +128,9 @@ app.controller('DynamicFormController', function ($scope, $http) {
         // }
     }
 
-    $scope.subFieldChanged = function (groupName, value) {
+    $scope.subFieldChanged = function (groupName, value, check) {
         const subFields = $scope.subFields;
-        if (groupName in subFields)
+        if (groupName in subFields && check)
             delete subFields[groupName]
         else
             subFields[groupName] = value ? value : '';
@@ -136,7 +140,7 @@ app.controller('DynamicFormController', function ($scope, $http) {
         // else
         //     showSibs[groupName] = value ? value : '';
 
-        // console.log(showSibs);
+        console.log(subFields);
     }
 
     $scope.checkBoxSubChanged = function (groupName, value) {
@@ -154,7 +158,7 @@ app.controller('DynamicFormController', function ($scope, $http) {
             $scope.subFieldChanged(option.subfield.name)
             previousRadio[fieldName] = option.subfield.name
         } else
-            $scope.subFieldChanged(previousRadio[fieldName])
+            $scope.subFieldChanged(previousRadio[fieldName], '', true)
     };
 
     // , type, field, option

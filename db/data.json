@@ -94,6 +94,7 @@
         "type": "radio",
         "label": "Covid Vaccine Status",
         "name": "covid_vaccine",
+        "id": "covid_vaccine",
         "options": [
             {
                 "title": "Yes - Date if known",
