@@ -390,6 +390,52 @@
     },
     {
         "type": "checkbox",
+        "label": "Pulse",
+        "name": "pulse",
+        "options": [
+            {
+                "title": "Enter Value",
+                "value": "enter_value_pulse",
+                "id": "enter_name_pulse",
+                "subfield": {
+                    "type": "text",
+                    "name": "pulse_value",
+                    "value": "pulse_value",
+                    "placeholder": "Enter Value"
+                }
+            },
+            {
+                "title": "UTO - Telephonic",
+                "value": "uto_telephonic",
+                "id": "uto_telephonic_pulse"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
+        "label": "Respiratory",
+        "name": "respiratory",
+        "options": [
+            {
+                "title": "Enter Value",
+                "value": "enter_value_respiratory",
+                "id": "enter_name_respiratory",
+                "subfield": {
+                    "type": "text",
+                    "name": "respiratory_value",
+                    "value": "respiratory_value",
+                    "placeholder": "Enter Value"
+                }
+            },
+            {
+                "title": "UTO - Telephonic",
+                "value": "uto_telephonic",
+                "id": "uto_telephonic_respiratory"
+            }
+        ]
+    },
+    {
+        "type": "checkbox",
         "label": "TEMP",
         "name": "temperature",
         "options": [
@@ -397,7 +443,7 @@
                 "title": "Enter Value",
                 "value": "enter_value_temp",
                 "id": "enter_value_temp",
-                "siblings": "oral,tympanic",
+                "siblings": "oral_temp,tympanic",
                 "subfield": {
                     "type": "text",
                     "name": "temp_value",
@@ -433,7 +479,7 @@
                 "title": "Enter Value",
                 "value": "enter_value_weight",
                 "id": "enter_value_weight",
-                "siblings": "reported,actual",
+                "siblings": "reported_weight,weight_actual",
                 "subfield": {
                     "type": "text",
                     "name": "weight_value",
@@ -531,33 +577,63 @@
             {
                 "title": "Headache",
                 "value": "headache",
-                "id": "headache"
+                "id": "neurological_headache"
             },
             {
                 "title": "Vertigo",
                 "value": "vertigo",
-                "id": "vertigo"
+                "id": "neurological_vertigo"
             },
             {
                 "title": "Weakness",
                 "value": "weakness",
-                "id": "weakness"
+                "id": "neurological_weakness"
             },
             {
                 "title": "Seizures",
                 "value": "seizures",
-                "id": "seizures"
+                "id": "neurological_seizures"
+            },
+            {
+                "title": "Tremor",
+                "value": "tremor",
+                "id": "neurological_tremor"
+            },
+            {
+                "title": "Aphasia",
+                "value": "aphasia",
+                "id": "neurological_aphasia"
             },
             {
                 "title": "Paralysis",
                 "value": "paralysis",
-                "id": "paralysis",
+                "id": "neurological_paralysis",
                 "subfield": {
                     "type": "text",
-                    "name": "neurological_paralysis",
-                    "value": "neurological_paralysis",
+                    "name": "neurological_paralysis_value",
+                    "value": "neurological_paralysis_value",
                     "placeholder": "Type here..."
                 }
+            },
+            {
+                "title": "Slurred Speech",
+                "value": "slurred_speech",
+                "id": "neurological_slurred_speech"
+            },
+            {
+                "title": "Short term memory loss",
+                "value": "short_term_memory_loss",
+                "id": "neurological_short_term_memory_loss"
+            },
+            {
+                "title": "Long term memory loss",
+                "value": "long_term_memory_loss",
+                "id": "neurological_long_term_memory_loss"
+            },
+            {
+                "title": "Non Verbal",
+                "value": "non_verbal",
+                "id": "neurological_non_verbal"
             },
             {
                 "title": "Other",
@@ -587,7 +663,7 @@
         "type": "checkbox",
         "label": "Cardiopulmonary",
         "dbType": "array",
-        "name": "hearing",
+        "name": "cardiopulmonary",
         "oneSelector": {
             "type": "checkbox",
             "label": "WNL (No issues of needs identified)",
@@ -598,7 +674,82 @@
             {
                 "title": "Pace Maker",
                 "value": "pace_maker",
-                "id": "pace_maker"
+                "id": "cardiopulmonary_pace_maker"
+            },
+            {
+                "title": "Tachycardia",
+                "value": "tachycardia",
+                "id": "cardiopulmonary_tachycardia"
+            },
+            {
+                "title": "Bradycardia",
+                "value": "bradycardia",
+                "id": "cardiopulmonary_bradycardia"
+            },
+            {
+                "title": "Palpitations",
+                "value": "palpitations",
+                "id": "cardiopulmonary_palpitations"
+            },
+            {
+                "title": "Diaphoresis",
+                "value": "diaphoresis",
+                "id": "cardiopulmonary_diaphoresis"
+            },
+            {
+                "title": "Night Sweats",
+                "value": "night_sweats",
+                "id": "cardiopulmonary_night_sweats"
+            },
+            {
+                "title": "Cyanosis",
+                "value": "cyanosis",
+                "id": "cardiopulmonary_cyanosis"
+            },
+            {
+                "title": "Dyspnea",
+                "value": "dyspnea",
+                "id": "cardiopulmonary_dyspnea"
+            },
+            {
+                "title": "Orthopnea",
+                "value": "orthopnea",
+                "id": "cardiopulmonary_orthopnea"
+            },
+            {
+                "title": "Change in SOB in last 6 months",
+                "value": "change_in_sob",
+                "id": "cardiopulmonary_change_in_sob"
+            },
+            {
+                "title": "Cough",
+                "value": "cough",
+                "id": "cardiopulmonary_cough"
+            },
+            {
+                "title": "Pallor",
+                "value": "pallor",
+                "id": "cardiopulmonary_pallor"
+            },
+            {
+                "title": "Wheezes",
+                "value": "wheezes",
+                "id": "cardiopulmonary_wheezes"
+            },
+            {
+                "title": "Tracheostomy",
+                "value": "tracheostomy",
+                "id": "cardiopulmonary_tracheostomy"
+            },
+            {
+                "title": "Smoker",
+                "value": "smoker",
+                "id": "cardiopulmonary_smoker"
+            },
+            {
+                "title": "Smoking Cessation Education Provided",
+                "value": "smoking_cessation_education_provided",
+                "id": "cardiopulmonary_smoking_cessation_education_provided"
             },
             {
                 "title": "Oxygen specify in liters/min",
@@ -610,6 +761,26 @@
                     "value": "cardiopulmonary_oxygen_value",
                     "placeholder": "Type here..."
                 }
+            },
+            {
+                "title": "Oxygen Safety Teaching Provided",
+                "value": "oxygen_safety_teaching_provided",
+                "id": "cardiopulmonary_oxygen_safety_teaching_provided"
+            },
+            {
+                "title": "Nebulizer",
+                "value": "nebulizer",
+                "id": "cardiopulmonary_nebulizer"
+            },
+            {
+                "title": "Nasal Cannula",
+                "value": "nasal_cannula",
+                "id": "cardiopulmonary_nasal_cannula"
+            },
+            {
+                "title": "Face Mask",
+                "value": "face_mask",
+                "id": "cardiopulmonary_face_mask"
             },
             {
                 "title": "Comments",
@@ -647,6 +818,16 @@
                 "id": "vision_glasses"
             },
             {
+                "title": "Cataracts",
+                "value": "cataracts",
+                "id": "vision_cataracts"
+            },
+            {
+                "title": "Glaucoma",
+                "value": "glaucoma",
+                "id": "vision_glaucoma"
+            },
+            {
                 "title": "Comments",
                 "value": "comments",
                 "id": "vision_comments",
@@ -675,6 +856,11 @@
                 "title": "Heard of Hearing",
                 "value": "heard_of_hearing",
                 "id": "hearing_heard_of_hearing"
+            },
+            {
+                "title": "Hearing Aid",
+                "value": "hearing_aid",
+                "id": "hearing_hearing_aid"
             },
             {
                 "title": "Deaf",
@@ -717,6 +903,16 @@
                 "id": "musculoskeletal_weakness"
             },
             {
+                "title": "Unsteady Gait",
+                "value": "unsteady_gait",
+                "id": "musculoskeletal_unsteady_gait"
+            },
+            {
+                "title": "Poor Balance",
+                "value": "poor_balance",
+                "id": "musculoskeletal_poor_balance"
+            },
+            {
                 "title": "Amputation - Specifiy Location",
                 "value": "amputation",
                 "id": "musculoskeletal_amputation",
@@ -726,6 +922,46 @@
                     "value": "musculoskeletal_amputation_location",
                     "placeholder": "Type here..."
                 }
+            },
+            {
+                "title": "Prosthesis",
+                "value": "prosthesis",
+                "id": "musculoskeletal_prosthesis"
+            },
+            {
+                "title": "Contractures",
+                "value": "contractures",
+                "id": "musculoskeletal_contractures"
+            },
+            {
+                "title": "Joint Stiffness/Swelling",
+                "value": "joint_stiffness_swelling",
+                "id": "musculoskeletal_joint_stiffness_swelling"
+            },
+            {
+                "title": "Stooped Posture",
+                "value": "stopted_posture",
+                "id": "musculoskeletal_stopted_posture"
+            },
+            {
+                "title": "Splint",
+                "value": "splint",
+                "id": "musculoskeletal_splint"
+            },
+            {
+                "title": "Non-Ambulatory",
+                "value": "non_ambulatory",
+                "id": "musculoskeletal_non_ambulatory"
+            },
+            {
+                "title": "Bedbound",
+                "value": "bedbound",
+                "id": "musculoskeletal_bedbound"
+            },
+            {
+                "title": "Turning And Repositioning every 2 hours",
+                "value": "turning_and_repositioning",
+                "id": "musculoskeletal_turning_and_repositioning"
             },
             {
                 "title": "Comments",
@@ -780,6 +1016,11 @@
                 }
             },
             {
+                "title": "Dialysis",
+                "value": "dialysis",
+                "id": "endocrine_dialysis"
+            },
+            {
                 "title": "Other",
                 "value": "other",
                 "id": "endocrine_other",
@@ -832,24 +1073,48 @@
                 }
             },
             {
-                "title": "Other",
-                "value": "other",
-                "id": "gastrointestinal_other",
-                "subfield": {
-                    "type": "text",
-                    "name": "gastrointestinal_other_value",
-                    "value": "gastrointestinal_other_value",
-                    "placeholder": "Type here..."
-                }
+                "title": "Diarrhea",
+                "value": "diarrhea",
+                "id": "gastrointestinal_diarrhea"
             },
             {
-                "title": "Comments",
-                "value": "comments",
-                "id": "gastrointestinal_comments",
+                "title": "Hemorrhoids",
+                "value": "hemorrhoids",
+                "id": "gastrointestinal_hemorrhoids"
+            },
+            {
+                "title": "Melena",
+                "value": "melena",
+                "id": "gastrointestinal_melena"
+            },
+            {
+                "title": "Indigestion",
+                "value": "indigestion",
+                "id": "gastrointestinal_indig"
+            },
+            {
+                "title": "Nausea",
+                "value": "nausea",
+                "id": "gastrointestinal_nausea"
+            },
+            {
+                "title": "Vomiting",
+                "value": "vomiting",
+                "id": "gastrointestinal_vomiting"
+            },
+            {
+                "title": "Ostomy",
+                "value": "ostomy",
+                "id": "gastrointestinal_ostomy"
+            },
+            {
+                "title": "Ostomy Care performed by",
+                "value": "ostomy_care_performed_by",
+                "id": "gastrointestinal_ostomy_care",
                 "subfield": {
                     "type": "text",
-                    "name": "gastrointestinal_comments",
-                    "value": "gastrointestinal_comments_value",
+                    "name": "ostomy_care_performed_by_value",
+                    "value": "gastrointestinal_ostomy_care_performed_by_value",
                     "placeholder": "Type here..."
                 }
             }
@@ -878,6 +1143,16 @@
                 "id": "oral_bleeding_gums"
             },
             {
+                "title": "Dsyphhagia",
+                "value": "dsyphhagia",
+                "id": "oral_dsyphhagia"
+            },
+            {
+                "title": "Difficulty Chewing",
+                "value": "difficulty_chewing",
+                "id": "oral_difficulty_chewing"
+            },
+            {
                 "title": "Comments",
                 "value": "comments",
                 "id": "oral_comments",
@@ -902,6 +1177,26 @@
                 "id": "diet_regular"
             },
             {
+                "title": "Special: Low fat",
+                "value": "special_low_fat",
+                "id": "diet_special_low_fat"
+            },
+            {
+                "title": "Special: Low Salt",
+                "value": "special_low_salt",
+                "id": "diet_special_low_salt"
+            },
+            {
+                "title": "Special: Low Sugar",
+                "value": "special_low_sugar",
+                "id": "diet_special_low_sugar"
+            },
+            {
+                "title": "Fluid Restrictions",
+                "value": "fluid_restrictions",
+                "id": "diet_fluid_restrictions"
+            },
+            {
                 "title": "Supplements",
                 "value": "supplements",
                 "id": "diet_supplements",
@@ -911,6 +1206,26 @@
                     "value": "supplements_value",
                     "placeholder": "Type here..."
                 }
+            },
+            {
+                "title": "Peg Tube",
+                "value": "peg_tube",
+                "id": "diet_peg_tube"
+            },
+            {
+                "title": "NG Tube",
+                "value": "ng_tube",
+                "id": "diet_ng_tube"
+            },
+            {
+                "title": "Pureed",
+                "value": "pureed",
+                "id": "diet_pureed"
+            },
+            {
+                "title": "Chopped",
+                "value": "chopped",
+                "id": "diet_chopped"
             },
             {
                 "title": "Other",
@@ -1013,6 +1328,41 @@
                 "title": "Is on a fluid restricted diet (1)",
                 "value": "fluid_restricted_diet",
                 "id": "nutritional_risks_fluid_restricted_diet"
+            },
+            {
+                "title": "Has Oral/dental problems that makes eating difficult (2 points)",
+                "value": "oral_dental_problems",
+                "id": "nutritional_risks_oral_dental_problems"
+            },
+            {
+                "title": "Feeding other than oral (1 point)",
+                "value": "feeding_other",
+                "id": "nutritional_risks_feeding_other"
+            },
+            {
+                "title": "Eats fewer than 2 meals per day (1 point)",
+                "value": "eats_less_than_2_meals_per_day",
+                "id": "nutritional_risks_eats_less_than_2_meals_per_day"
+            },
+            {
+                "title": "Unexplained  loss/gain 10lbs in past 6 months ( 2 points)",
+                "value": "loss_weight_in_past_6_months",
+                "id": "loss_weight_in_past_6_months"
+            },
+            {
+                "title": "is on more than 3 RX or over the counter medications (1 point)",
+                "value": "more_than_3_medications",
+                "id": "more_than_3_medications"
+            },
+            {
+                "title": "Takes more than 2 drinks (beer,alcohol, wine) a day (1 point)",
+                "value": "takes_more_than_2_drinks",
+                "id": "nutritional_risks_takes_more_than_2_drinks"
+            },
+            {
+                "title": "Total score (auto calculated based on checks)",
+                "value": "total_score",
+                "id": "nutritional_risks_total_score"
             }
         ]
     },
@@ -1037,6 +1387,31 @@
                 "title": "Frequency",
                 "value": "frequency",
                 "id": "genitourinary_frequency"
+            },
+            {
+                "title": "Urgency",
+                "value": "urgency",
+                "id": "genitourinary_urgency"
+            },
+            {
+                "title": "Odor",
+                "value": "odor",
+                "id": "genitourinary_odor"
+            },
+            {
+                "title": "Hematuria",
+                "value": "hematuria",
+                "id": "genitourinary_hematuria"
+            },
+            {
+                "title": "Nocturia",
+                "value": "nocturia",
+                "id": "genitourinary_nocturia"
+            },
+            {
+                "title": "Catheter",
+                "value": "catheter",
+                "id": "genitourinary_catheter"
             },
             {
                 "title": "Comments",
@@ -1072,6 +1447,54 @@
                 "title": "Itching",
                 "value": "itching",
                 "id": "skin_itching"
+            },
+            {
+                "title": "Ecchymosis",
+                "value": "ecchymosis",
+                "id": "skin_ecchymosis"
+            },
+            {
+                "title": "Abrasion",
+                "value": "abrasion",
+                "id": "skin_abrasion"
+            },
+            {
+                "title": "Surgical Wound",
+                "value": "surgical_wound",
+                "id": "skin_surgical_wound"
+            },
+            {
+                "title": "Wound: Location and Description",
+                "value": "wound",
+                "id": "skin_wound",
+                "subfield": {
+                    "type": "text",
+                    "name": "skin_wound",
+                    "value": "skin_wound_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Wound care provided by:",
+                "value": "wound_care_provided_by",
+                "id": "skin_wound_care_provided_by",
+                "subfield": {
+                    "type": "text",
+                    "name": "skin_wound_care_provided_by",
+                    "value": "skin_wound_care_provided_by_value",
+                    "placeholder": "Type here..."
+                }
+            },
+            {
+                "title": "Wound Care Followup needed",
+                "value": "wound_care_followup_needed",
+                "id": "skin_wound_care_followup_needed",
+                "subfield": {
+                    "type": "text",
+                    "name": "skin_wound_care_followup_needed",
+                    "value": "skin_wound_care_followup_needed_value",
+                    "placeholder": "Type here..."
+                }
             },
             {
                 "title": "Comments",
@@ -1170,6 +1593,59 @@
                     "value": "functional_limitations_other_value",
                     "placeholder": "Type here..."
                 }
+            }
+        ]
+    },
+    {
+        "type": "listing",
+        "name": "fall_rist_assessment",
+        "label": "Fall Rist Assessment",
+        "id": "fall_rist_assessment",
+        "options": [
+            {
+                "title": "Age over 65 ( 1 point)",
+                "value": "age_over_65",
+                "id": "fall_rist_assessment_age_over_65"
+            },
+            {
+                "title": "Diagnosis - 3 or more coexisting diagnosed conditions ( 1 point)",
+                "value": "diagnosis",
+                "id": "fall_rist_assessment_diagnosis"
+            },
+            {
+                "title": "Prior History of Falls within 3 months ( 1 point)",
+                "value": "prior_history_of_falls_within_3_months",
+                "id": "fall_rist_assessment_prior_history_of_falls_within_3_months"
+            },
+            {
+                "title": "incontinence ( 1 point)",
+                "value": "incontinence",
+                "id": "fall_rist_assessment_incontinence"
+            },
+            {
+                "title": "Visual impairment ( 1 point)",
+                "value": "visual_impairment",
+                "id": "fall_rist_assessment_visual_impairment"
+            },
+            {
+                "title": "Environmental hazards including inappropriate footwear, ptes, hard to reach items, rugs, uneven floor surfaces ( 1 point)",
+                "value": "environmental_hazards",
+                "id": "environmental_"
+            },
+            {
+                "title": "Polypharmacy - 4 or more medications/postural hypotension with dizziness ( 1 point)",
+                "value": "polypharmacy",
+                "id": "fall_rist_assessment_polypharmacy"
+            },
+            {
+                "title": "Pain Affecting level of function ( 1 point)",
+                "value": "pain_affecting_level_of_function",
+                "id": "fall_rist_assessment_pain_affecting_level_of_function"
+            },
+            {
+                "title": "Cognitive impairment( 1 point)",
+                "value": "cognitive_impairment",
+                "id": "fall_rist_assessment_cognitive_impairment"
             }
         ]
     },

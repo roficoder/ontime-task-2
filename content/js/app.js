@@ -79,6 +79,7 @@ app.controller('DynamicFormController', function ($scope, $http) {
             })
 
         }
+        console.log($scope.showSibs);
     }
 
 

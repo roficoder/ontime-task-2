@@ -33,6 +33,8 @@
         <form ng-submit="submitForm()" name="myForm" class="form">
             <div ng-repeat="field in formDefinition" class="form-field">
 
+                <h3 ng-if="field.heading">{{field.heading}}</h3>
+
                 <label>{{ field.label }}</label>
 
                 <div ng-switch="field.type">
@@ -97,6 +99,18 @@
                                         placeholder="{{option.subfield.placeholder}}">
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!--================== LISTING ====================-->
+                    <div ng-switch-when="listing" class="listing">
+                        <div class="list-item" ng-repeat="option in field.options">
+                            <p>{{option.title}}</p>
+                            <input type="number">
+                        </div>
+                        <div class="total-score">
+                            <p>Total Score</p>
+                            <input type="number" disabled value="9">
                         </div>
                     </div>
 
