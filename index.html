@@ -51,15 +51,20 @@
                         <!-- <input type="text"> -->
                         <div class="checkbox-group">
                             <div ng-repeat="option in field.options">
-                                <input type="radio" ng-model="selectedRadios[field.name]"
-                                    ng-change="radioChanged(field.name, selectedRadios[field.name])" id="{{option.id}}"
-                                    ng-value="option.value" name="{{field.label}}">
+                                <!-- ng-change="radioChanged(field.name, selectedRadios[field.name], option)" -->
+
+                                <input type="radio" ng-model="selectedRadios[field.name]" id="{{option.id}}"
+                                    ng-change="radioChanged(field.name, option)" ng-value="option.value"
+                                    name="{{field.label}}">
                                 <label for="{{option.id}}">{{option.title}}</label>
+
+
                                 <div ng-if="selectedRadios[field.name] === option.value && option.subfield">
                                     <input type="{{option.subfield.type}}" ng-model="subFields[option.subfield.name]"
                                         ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])"
                                         placeholder="{{option.subfield.placeholder}}">
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -105,12 +110,16 @@
                     <!--================== LISTING ====================-->
                     <div ng-switch-when="listing" class="listing">
                         <div class="list-item" ng-repeat="option in field.options">
-                            <p>{{option.title}}</p>
-                            <input type="number">
+                            <label for="{{option.id}}">{{option.title}} ({{option.points}} {{option.points <= 1
+                                    ? 'point' :'points'}})</label>
+                                    <div class="check-box"><input type="checkbox" ng-model="listChecks[option.id]"
+                                            ng-change="listCheckChanged(listChecks[option.id], option.points, option.value, field.name)"
+                                            id="{{option.id}}">
+                                    </div>
                         </div>
                         <div class="total-score">
                             <p>Total Score</p>
-                            <input type="number" disabled value="9">
+                            <div class="total-score">{{scores[field.name]}}</div>
                         </div>
                     </div>
 

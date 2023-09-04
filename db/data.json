@@ -47,7 +47,7 @@
         "type": "checkbox",
         "label": "Covid Screening",
         "name": "covid_screening",
-        "dbType": "array",
+        "dbType": "object",
         "id": "covid_screening",
         "required": true,
         "errorMsg": "Covid Screening is required",
@@ -80,7 +80,13 @@
             {
                 "title": "Other",
                 "value": "other",
-                "id": "covid_screening_other"
+                "id": "covid_screening_other",
+                "subfield": {
+                    "type": "text",
+                    "name": "covid_screening_other_value",
+                    "value": "covid_screening_other_value",
+                    "placeholder": "Type here ..."
+                }
             }
         ]
     },
@@ -179,6 +185,8 @@
     {
         "type": "checkbox",
         "label": "Languages",
+        "name": "languages",
+        "dbType": "object",
         "options": [
             {
                 "title": "English",
@@ -196,8 +204,8 @@
                 "id": "other_language",
                 "subfield": {
                     "type": "text",
-                    "name": "other_language_text",
-                    "value": "other_language_text",
+                    "name": "other_language_value",
+                    "value": "other_language_value",
                     "placeholder": "Type here ..."
                 }
             }
@@ -1310,59 +1318,70 @@
         "dbType": "object",
         "options": [
             {
-                "title": "On a medically prescribed diet (1)",
+                "title": "On a medically prescribed diet",
                 "value": "on_diet",
-                "id": "nutritional_risks_on_diet"
+                "id": "nutritional_risks_on_diet",
+                "points": 1
             },
             {
-                "title": "Has an open wound (1)",
+                "title": "Has an open wound",
                 "value": "open_wound",
-                "id": "nutritional_risks_open_wound"
+                "id": "nutritional_risks_open_wound",
+                "points": 1
             },
             {
-                "title": "Is elderly, lives alone and dependent for shopping, meal prep and/or feeding (1)",
+                "title": "Is elderly, lives alone and dependent for shopping, meal prep and/or feeding",
                 "value": "live_for_shopping",
-                "id": "nutritional_risks_live_for_shopping"
+                "id": "nutritional_risks_live_for_shopping",
+                "points": 1
             },
             {
-                "title": "Is on a fluid restricted diet (1)",
+                "title": "Is on a fluid restricted diet",
                 "value": "fluid_restricted_diet",
-                "id": "nutritional_risks_fluid_restricted_diet"
+                "id": "nutritional_risks_fluid_restricted_diet",
+                "points": 1
             },
             {
-                "title": "Has Oral/dental problems that makes eating difficult (2 points)",
+                "title": "Has Oral/dental problems that makes eating difficult",
                 "value": "oral_dental_problems",
-                "id": "nutritional_risks_oral_dental_problems"
+                "id": "nutritional_risks_oral_dental_problems",
+                "points": 1
             },
             {
-                "title": "Feeding other than oral (1 point)",
+                "title": "Feeding other than oral",
                 "value": "feeding_other",
-                "id": "nutritional_risks_feeding_other"
+                "id": "nutritional_risks_feeding_other",
+                "points": 2
             },
             {
-                "title": "Eats fewer than 2 meals per day (1 point)",
+                "title": "Eats fewer than 2 meals per day",
                 "value": "eats_less_than_2_meals_per_day",
-                "id": "nutritional_risks_eats_less_than_2_meals_per_day"
+                "id": "nutritional_risks_eats_less_than_2_meals_per_day",
+                "points": 1
             },
             {
-                "title": "Unexplained  loss/gain 10lbs in past 6 months ( 2 points)",
+                "title": "Unexplained  loss/gain 10lbs in past 6 months",
                 "value": "loss_weight_in_past_6_months",
-                "id": "loss_weight_in_past_6_months"
+                "id": "nutritional_risks_loss_weight_in_past_6_months",
+                "points": 1
             },
             {
-                "title": "is on more than 3 RX or over the counter medications (1 point)",
+                "title": "is on more than 3 RX or over the counter medications ",
                 "value": "more_than_3_medications",
-                "id": "more_than_3_medications"
+                "id": "nutritional_risks_more_than_3_medications",
+                "points": 1
             },
             {
-                "title": "Takes more than 2 drinks (beer,alcohol, wine) a day (1 point)",
+                "title": "Takes more than 2 drinks (beer,alcohol, wine) a day",
                 "value": "takes_more_than_2_drinks",
-                "id": "nutritional_risks_takes_more_than_2_drinks"
+                "id": "nutritional_risks_takes_more_than_2_drinks",
+                "points": 1
             },
             {
                 "title": "Total score (auto calculated based on checks)",
                 "value": "total_score",
-                "id": "nutritional_risks_total_score"
+                "id": "nutritional_risks_total_score",
+                "points": 1
             }
         ]
     },
@@ -1510,6 +1529,225 @@
         ]
     },
     {
+        "type": "radio",
+        "label": "Does the patient have pain ?",
+        "name": "patient_pain",
+        "id": "does_patient_pain",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "patient_pain_yes",
+                "subfield": {
+                    "type": "text",
+                    "name": "patient_pain_yes_value",
+                    "value": "patient_pain_yes",
+                    "placeholder": "Type here ..."
+                }
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "patient_pain_no"
+            },
+            {
+                "title": "unable to report",
+                "value": "unable_to_report",
+                "id": "patient_pain_unable_to_report"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Does PCG or Aide note pain ?",
+        "name": "noted_pain",
+        "id": "noted_pain",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "noted_pain_yes"
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "noted_pain_no"
+            }
+        ]
+    },
+    {
+        "type": "select",
+        "label": "Pain Scale",
+        "name": "pain_scale",
+        "errorMsg": "Please select one of the following assesesment type",
+        "options": [
+            {
+                "title": "Unable to Report",
+                "value": "unable_to_report"
+            },
+            {
+                "title": "0 - No Pain",
+                "value": 0
+            },
+            {
+                "title": "1",
+                "value": 1
+            },
+            {
+                "title": "2",
+                "value": 2
+            },
+            {
+                "title": "3",
+                "value": 3
+            },
+            {
+                "title": "4",
+                "value": 4
+            },
+            {
+                "title": "5",
+                "value": 5
+            },
+            {
+                "title": "6",
+                "value": 6
+            },
+            {
+                "title": "7",
+                "value": 7
+            },
+            {
+                "title": "8",
+                "value": 8
+            },
+            {
+                "title": "9",
+                "value": 9
+            },
+            {
+                "title": "10 - Severe Pain",
+                "value": 10
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Are there any pain medications ?",
+        "name": "pain_medications",
+        "id": "pain_medications",
+        "options": [
+            {
+                "title": "Yes (Specifiy)",
+                "value": "yes",
+                "id": "pain_medications_yes",
+                "subfield": {
+                    "type": "text",
+                    "name": "pain_medication_yes_value",
+                    "value": "pain_medication_yes_value",
+                    "placeholder": "Type here ..."
+                }
+            },
+            {
+                "title": "No",
+                "value": "pain_medication_no",
+                "id": "pain_medication_no"
+            }
+        ]
+    },
+    {
+        "label": "Describe Pain",
+        "value": "describe_pain",
+        "name": "describe_pain",
+        "type": "checkbox",
+        "options": [
+            {
+                "title": "Unable to Report",
+                "value": "unable_to_report",
+                "id": "describe_pain_unable_to_report"
+            },
+            {
+                "title": "Throbbing",
+                "value": "throbbing",
+                "id": "describe_pain_throbbing"
+            },
+            {
+                "title": "Aching",
+                "value": "aching",
+                "id": "describe_pain_aching"
+            },
+            {
+                "title": "Sharp",
+                "value": "sharp",
+                "id": "describe_pain_sharp"
+            },
+            {
+                "title": "Burning",
+                "value": "burning",
+                "id": "describe_pain_burning"
+            },
+            {
+                "title": "Dull",
+                "value": "dull",
+                "id": "describe_pain_dull"
+            },
+            {
+                "title": "Other",
+                "value": "other",
+                "id": "describe_pain_other",
+                "subfield": {
+                    "type": "text",
+                    "name": "pain_medication_yes_value",
+                    "value": "pain_medication_yes_value",
+                    "placeholder": "Type here ..."
+                }
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "What aggravates the pain ?",
+        "name": "pain_aggravation",
+        "id": "pain_aggravation",
+        "options": [
+            {
+                "title": "Describe",
+                "value": "describe",
+                "id": "pain_aggravation_describe",
+                "subfield": {
+                    "type": "text",
+                    "name": "pain_aggravation_describe_value",
+                    "value": "pain_aggravation_describe_value",
+                    "placeholder": "Type here ..."
+                }
+            },
+            {
+                "title": "N/A - No",
+                "value": "N/A",
+                "id": "pain_aggravation_no"
+            }
+        ]
+    },
+    {
+        "type": "radio",
+        "label": "Is pain relief adequate ?",
+        "name": "pain_relief",
+        "id": "pain_relief",
+        "options": [
+            {
+                "title": "Yes",
+                "value": "yes",
+                "id": "pain_relief_yes"
+            },
+            {
+                "title": "No",
+                "value": "no",
+                "id": "pain_relief_no"
+            }
+        ]
+    },
+    {},
+    {
         "type": "checkbox",
         "label": "Funnctional Assesment",
         "name": "functional_assessment",
@@ -1527,6 +1765,7 @@
             }
         ]
     },
+    {},
     {
         "type": "checkbox",
         "label": "Functional Limitations",
@@ -1605,47 +1844,56 @@
             {
                 "title": "Age over 65 ( 1 point)",
                 "value": "age_over_65",
-                "id": "fall_rist_assessment_age_over_65"
+                "id": "fall_rist_assessment_age_over_65",
+                "points": 1
             },
             {
                 "title": "Diagnosis - 3 or more coexisting diagnosed conditions ( 1 point)",
                 "value": "diagnosis",
-                "id": "fall_rist_assessment_diagnosis"
+                "id": "fall_rist_assessment_diagnosis",
+                "points": 2
             },
             {
                 "title": "Prior History of Falls within 3 months ( 1 point)",
                 "value": "prior_history_of_falls_within_3_months",
-                "id": "fall_rist_assessment_prior_history_of_falls_within_3_months"
+                "id": "fall_rist_assessment_prior_history_of_falls_within_3_months",
+                "points": 1
             },
             {
                 "title": "incontinence ( 1 point)",
                 "value": "incontinence",
-                "id": "fall_rist_assessment_incontinence"
+                "id": "fall_rist_assessment_incontinence",
+                "points": 2
             },
             {
                 "title": "Visual impairment ( 1 point)",
                 "value": "visual_impairment",
-                "id": "fall_rist_assessment_visual_impairment"
+                "id": "fall_rist_assessment_visual_impairment",
+                "points": 2
             },
             {
                 "title": "Environmental hazards including inappropriate footwear, ptes, hard to reach items, rugs, uneven floor surfaces ( 1 point)",
                 "value": "environmental_hazards",
-                "id": "environmental_"
+                "id": "environmental_",
+                "points": 3
             },
             {
                 "title": "Polypharmacy - 4 or more medications/postural hypotension with dizziness ( 1 point)",
                 "value": "polypharmacy",
-                "id": "fall_rist_assessment_polypharmacy"
+                "id": "fall_rist_assessment_polypharmacy",
+                "points": 1
             },
             {
                 "title": "Pain Affecting level of function ( 1 point)",
                 "value": "pain_affecting_level_of_function",
-                "id": "fall_rist_assessment_pain_affecting_level_of_function"
+                "id": "fall_rist_assessment_pain_affecting_level_of_function",
+                "points": 1
             },
             {
                 "title": "Cognitive impairment( 1 point)",
                 "value": "cognitive_impairment",
-                "id": "fall_rist_assessment_cognitive_impairment"
+                "id": "fall_rist_assessment_cognitive_impairment",
+                "points": 1
             }
         ]
     },
