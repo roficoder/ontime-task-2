@@ -2,77 +2,81 @@ var app = angular.module('myApp', []);
 
 
 
-app.controller('DynamicFormController', function ($scope, $http) {
-    $scope.formData = {};
-    $scope.formDefinition = []
+app.controller('DynamicFormController', function ($http) {
+    'use strict';
+
+    var ctrl = this;
+
+    ctrl.formData = {};
+    ctrl.formDefinition = []
+    ctrl.selectedRadios = {};
+    ctrl.subFields = {};
+    ctrl.checkBoxSubs = {};
+    ctrl.checkBoxes = {}
+    ctrl.showSibs = {};
+    ctrl.oneSelectors = {}
+    ctrl.listChecks = {}
+    ctrl.previousRadio = {}
+    ctrl.previousChecks = {}
 
     const url = 'db/data.json'
+
     $http.get(url)
         .then(function (response) {
-            $scope.formDefinition = response.data
-            $scope.makeArrData($scope.formDefinition)
+            ctrl.formDefinition = response.data
+            ctrl.makeFormData(ctrl.formDefinition)
         })
         .catch(function (error) {
             console.error('Error fetching JSON data:', error);
         });
 
-    $scope.selectedRadios = {};
-    $scope.subFields = {};
-    $scope.checkBoxSubs = {};
-    $scope.checkBoxes = {}
-    $scope.showSibs = {};
-    $scope.oneSelectors = {}
-    $scope.listChecks = {}
-    $scope.scores = {}
-    $scope.previousRadio = {}
-    $scope.previousChecks = {}
 
-
-    /*================   MAKE FORMDATA   ===================*/
-    $scope.makeArrData = function (data) {
+    ctrl.makeFormData = function (data) {
         data.forEach(item => {
-            if (item.options && item.dbType == 'array')
-                $scope.formData[item.name] = []
-            else if (item.options && item.dbType == 'object') {
-                $scope.formData[item.name] = {}
-                const optionsArr = $scope.formData[item.name];
-                item.options.forEach(option => {
-                    optionsArr[option.value] = false;
-                })
+            switch (item.dbType || item.type) {
+                case 'array':
+                    ctrl.formData[item.name] = [];
+                    break;
+                case 'object':
+                    ctrl.formData[item.name] = {};
+                    item.options.forEach(option => {
+                        ctrl.formData[item.name][option.value] = false;
+                    });
+                    break;
+                case 'text':
+                case 'date':
+                case 'select':
+                case 'radio':
+                    ctrl.formData[item.name] = '';
+                    break;
+                case 'number':
+                    ctrl.formData[item.name] = 0;
+                    break;
+                default:
+                    break;
             }
-            else if (item.type == 'text' || item.type == 'date' || item.type == 'select' || item.type == 'radio')
-                $scope.formData[item.name] = ''
-            else if (item.type == 'number')
-                $scope.formData[item.name] = 0
-        })
-    }
+        });
+    };
 
-    $scope.listCheckChanged = function (check, option, field) {
-        const listChecks = $scope.listChecks;
-        const scores = $scope.scores;
-        const formDataListChecks = $scope.formData[field.name]
+    ctrl.listCheckChanged = function (value, option, field) {
+        const { listChecks } = ctrl;
+        const formDataListChecks = ctrl.formData[field.name];
 
         if (option.value in listChecks) {
             delete listChecks[option.value];
-            scores[field.name] = scores[field.name] - option.points
-        }
-        else {
-            listChecks[option.value] = check;
-            if (field.name in scores) {
-                scores[field.name] = scores[field.name] + option.points
-            } else {
-                scores[field.name] = option.points;
-            }
-            formDataListChecks[option.value] = check
-            formDataListChecks[field.total] = scores[field.name]
+            formDataListChecks[field.total] -= option.points;
+        } else {
+            listChecks[option.value] = value;
+            formDataListChecks[field.total] = (formDataListChecks[field.total] || 0) + option.points;
         }
 
-        console.log(listChecks, check);
-    }
+        formDataListChecks[option.value] = value;
+    };
 
-    $scope.groupCaller = function (members, values) {
+
+    ctrl.groupCaller = function (members, values) {
         console.log(members, values);
-        const selectedRadios = $scope.selectedRadios;
+        const selectedRadios = ctrl.selectedRadios;
         members.forEach((member, index) => {
             selectedRadios[member] = values[index]
         })
@@ -81,10 +85,10 @@ app.controller('DynamicFormController', function ($scope, $http) {
 
     }
 
-    $scope.handleCheckboxChange = function (value, type, field, option) {
+    ctrl.handleCheckboxChange = function (value, type, field, option) {
 
         /*================   SETTING CHECKBOX ARRAY OR OBJECT IN FORMDATA   ===================*/
-        const arr = $scope.formData[field];
+        const arr = ctrl.formData[field];
         if (type == 'array') {
             const index = arr.indexOf(option.value);
             if (index != -1) {
@@ -97,90 +101,68 @@ app.controller('DynamicFormController', function ($scope, $http) {
             arr[option.value] = value
         }
 
-        console.log(arr);
-
-        // const checkBoxArr = $scope.checkBoxes;
-
-        // if (option.id in checkBoxArr)
-        //     delete checkBoxArr[option.id];
-        // else
-        //     checkBoxArr[option.id] = option.id;
-
-        // const checkBoxSubsArr = $scope.checkBoxSubs;
-        // if (option.id in checkBoxSubsArr) {
-        //     delete checkBoxSubsArr[option.id];
-        //     if (option.subfield?.name in subFields)
-        //         $scope.subFieldChanged(option.subfield?.name, '', true)
-        // }
-        // else {
-        //     checkBoxSubsArr[option.id] = option.id;
-        //     $scope.subFieldChanged(option.subfield?.name)
-        //     // if (option.subfield?.name in subFields)
-        // }
-
         /*================   SHOWING SIBLINGS   ===================*/
-        const showSibs = $scope.showSibs;
+        const showSibs = ctrl.showSibs;
         if (option.siblings) {
             const sibs = option.siblings.split(',');
             sibs.forEach(sib => {
                 if (sib in showSibs)
                     delete showSibs[sib];
                 else
-                    $scope.showSibs[sib] = sib;
+                    ctrl.showSibs[sib] = sib;
             })
-
         }
 
-        // console.log($scope.checkBoxSubs);
-    }
-
-    $scope.showSubField = function (option) {
-        const subFields = $scope.subFields;
-        const checkBoxSubsArr = $scope.checkBoxSubs;
-        if (option.id in checkBoxSubsArr) {
-            delete checkBoxSubsArr[option.id];
-            if (option.subfield?.name in subFields)
-                $scope.subFieldChanged(option.subfield?.name, '', true)
-        }
-        else {
-            checkBoxSubsArr[option.id] = option.id;
-            $scope.subFieldChanged(option.subfield?.name)
-        }
-        console.log($scope.checkBoxSubs);
-
+        // console.log(ctrl.checkBoxSubs);
     }
 
 
-    $scope.oneSelectorChanged = function (id, value, field) {
-        $scope.oneSelectors[field.name] = true;
-        // const checkBox = $scope.formData[field.name]
+
+
+    ctrl.oneSelectorChanged = function (id, value, field) {
+        ctrl.oneSelectors[field.name] = true;
         let arr;
         if (value) {
             arr = {}
             arr[id] = true
-            $scope.formData[field.name] = arr
+            ctrl.formData[field.name] = arr
             field.options.forEach(option => {
-                $scope.checkBoxes[option.id] = false
-                delete $scope.checkBoxSubs[option.id]
-                if (option.subfield?.name in $scope.subFields)
-                    $scope.subFieldChanged(option.subfield?.name, '', true)
+                ctrl.checkBoxes[option.id] = false
+                delete ctrl.checkBoxSubs[option.id]
+                if (option.subfield?.name in ctrl.subFields)
+                    ctrl.subFieldChanged(option.subfield?.name, '', true)
             })
         } else {
             // checkBox = {};
-            $scope.formData[field.name] = {}
-            const optionsArr = $scope.formData[field.name];
+            ctrl.formData[field.name] = {}
+            const optionsArr = ctrl.formData[field.name];
             field.options.forEach(option => {
                 optionsArr[option.value] = false;
-                if (option.subfield?.name in $scope.subFields)
-                    $scope.subFieldChanged(option.subfield?.name, '', true)
+                if (option.subfield?.name in ctrl.subFields)
+                    ctrl.subFieldChanged(option.subfield?.name, '', true)
             })
         }
-
-        console.log($scope.checkBoxes);
     }
 
-    $scope.subFieldChanged = function (groupName, value, check) {
-        const subFields = $scope.subFields;
+    /*================   SUB FIELDS CODE   ===================*/
+    ctrl.showSubField = function (option) {
+        const subFields = ctrl.subFields;
+        const checkBoxSubsArr = ctrl.checkBoxSubs;
+        if (option.id in checkBoxSubsArr) {
+            delete checkBoxSubsArr[option.id];
+            if (option.subfield?.name in subFields)
+                ctrl.subFieldChanged(option.subfield?.name, '', true)
+        }
+        else {
+            checkBoxSubsArr[option.id] = option.id;
+            ctrl.subFieldChanged(option.subfield?.name)
+        }
+        console.log(ctrl.checkBoxSubsArr);
+
+    }
+
+    ctrl.subFieldChanged = function (groupName, value, check) {
+        const subFields = ctrl.subFields;
         if (groupName in subFields && check)
             delete subFields[groupName]
         else
@@ -189,55 +171,55 @@ app.controller('DynamicFormController', function ($scope, $http) {
         // console.log(subFields);
     }
 
-    $scope.checkBoxSubChanged = function (groupName, value) {
-        $scope.checkBoxSubs[groupName] = value;
-        // console.log($scope.checkBoxSubs);
+    ctrl.checkBoxSubChanged = function (groupName, value) {
+        ctrl.checkBoxSubs[groupName] = value;
+        // console.log(ctrl.checkBoxSubs);
     }
 
-    $scope.subFieldRemover = function (subfieldsArr) {
+    ctrl.subFieldRemover = function (subfieldsArr) {
         // const index of 
     }
 
-    $scope.radioChanged = function (fieldName, option, value) {
+    ctrl.radioChanged = function (fieldName, option, value) {
 
         console.log(value);
 
-        const previousRadio = $scope.previousRadio;
-        const radioFields = $scope.selectedRadios;
+        const previousRadio = ctrl.previousRadio;
+        const radioFields = ctrl.selectedRadios;
 
         // if (fieldName in radioFields) {
         //     delete radioFields[fieldName];
-        //     $scope.subFieldChanged(previousRadio[fieldName], '', true)
+        //     ctrl.subFieldChanged(previousRadio[fieldName], '', true)
         // } else {
         //     radioFields[fieldName] = value
         //     if (option.subfield) {
-        //         $scope.subFieldChanged(option.subfield.name)
+        //         ctrl.subFieldChanged(option.subfield.name)
         //         previousRadio[fieldName] = option.subfield.name
         //     }
         // }
 
         if (option.subfield) {
-            $scope.subFieldChanged(option.subfield?.name)
+            ctrl.subFieldChanged(option.subfield?.name)
             previousRadio[fieldName] = option.subfield?.name
         } else {
-            $scope.subFieldChanged(previousRadio[fieldName], '', true)
+            ctrl.subFieldChanged(previousRadio[fieldName], '', true)
         }
 
     };
 
     // , type, field, option
-    $scope.handleRadioChange = function (value) {
+    ctrl.handleRadioChange = function (value) {
         console.log(value);
     }
 
-    $scope.submitForm = function () {
-        const obj = { ...$scope.formData, ...$scope.selectedRadios, ...$scope.subFields }
+    ctrl.submitForm = function () {
+        const obj = { ...ctrl.formData, ...ctrl.selectedRadios, ...ctrl.subFields }
         console.log(obj);
     };
 
     document.body.addEventListener('click', () => {
         console.clear()
-        $scope.submitForm()
+        ctrl.submitForm()
     })
 });
 
@@ -254,14 +236,14 @@ app.directive('tick', function () {
             checked: '@',
             onCheckboxChange: '&',
         },
-        controller: function ($scope) {
-            $scope.disabled = false;
-            $scope.model = false;
+        controller: function (ctrl) {
+            ctrl.disabled = false;
+            ctrl.model = false;
 
-            $scope.checkboxChanged = function (event) {
-                console.log($scope.model);
-                $scope.onCheckboxChange({ value: $scope.model });
-                // console.log($scope.disabled);
+            ctrl.checkboxChanged = function (event) {
+                console.log(ctrl.model);
+                ctrl.onCheckboxChange({ value: ctrl.model });
+                // console.log(ctrl.disabled);
             };
         },
 
@@ -288,13 +270,13 @@ app.directive('radio', function () {
             onRadioChange: '&',
         },
 
-        controller: function ($scope) {
-            $scope.model;
+        controller: function (ctrl) {
+            ctrl.model;
 
-            console.log($scope.obj);
+            console.log(ctrl.obj);
 
-            $scope.radioChanged = function () {
-                $scope.onRadioChange({ value: $scope.obj });
+            ctrl.radioChanged = function () {
+                ctrl.onRadioChange({ value: ctrl.obj });
                 console.log("Some");
             };
 

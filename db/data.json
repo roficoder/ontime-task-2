@@ -1393,12 +1393,6 @@
                 "value": "takes_more_than_2_drinks",
                 "id": "nutritional_risks_takes_more_than_2_drinks",
                 "points": 1
-            },
-            {
-                "title": "Total score (auto calculated based on checks)",
-                "value": "total_score",
-                "id": "nutritional_risks_total_score",
-                "points": 1
             }
         ]
     },
@@ -1881,60 +1875,62 @@
     },
     {
         "type": "listing",
-        "name": "fall_rist_assessment",
-        "label": "Fall Rist Assessment",
+        "label": "Fall Risk Assessment",
+        "name": "fall_risk_assessment",
+        "dbType": "object",
+        "total": "total_score",
         "id": "fall_rist_assessment",
         "options": [
             {
-                "title": "Age over 65 ( 1 point)",
+                "title": "Age over 65",
                 "value": "age_over_65",
                 "id": "fall_rist_assessment_age_over_65",
                 "points": 1
             },
             {
-                "title": "Diagnosis - 3 or more coexisting diagnosed conditions ( 1 point)",
-                "value": "diagnosis",
+                "title": "Diagnosis - 3 or more coexisting diagnosed conditions",
+                "value": "diagnosed conditions",
                 "id": "fall_rist_assessment_diagnosis",
                 "points": 2
             },
             {
-                "title": "Prior History of Falls within 3 months ( 1 point)",
+                "title": "Prior History of Falls within 3 months",
                 "value": "prior_history_of_falls_within_3_months",
                 "id": "fall_rist_assessment_prior_history_of_falls_within_3_months",
                 "points": 1
             },
             {
-                "title": "incontinence ( 1 point)",
-                "value": "incontinence",
+                "title": "Incontinence",
+                "value": "fall_rist_incontinence",
                 "id": "fall_rist_assessment_incontinence",
                 "points": 2
             },
             {
-                "title": "Visual impairment ( 1 point)",
+                "title": "Visual impairment",
                 "value": "visual_impairment",
                 "id": "fall_rist_assessment_visual_impairment",
                 "points": 2
             },
             {
-                "title": "Environmental hazards including inappropriate footwear, ptes, hard to reach items, rugs, uneven floor surfaces ( 1 point)",
+                "title": "Environmental hazards including inappropriate footwear, ptes, hard to reach items, rugs, uneven floor surfaces",
                 "value": "environmental_hazards",
-                "id": "environmental_",
+                "id": "environmental_hazards_including_inappropriate_footwear",
                 "points": 3
             },
             {
-                "title": "Polypharmacy - 4 or more medications/postural hypotension with dizziness ( 1 point)",
+                "title": "Polypharmacy - 4 or more medications/postural hypotension with dizziness",
                 "value": "polypharmacy",
                 "id": "fall_rist_assessment_polypharmacy",
                 "points": 1
             },
             {
-                "title": "Pain Affecting level of function ( 1 point)",
+                "title": "Pain Affecting level of function",
                 "value": "pain_affecting_level_of_function",
                 "id": "fall_rist_assessment_pain_affecting_level_of_function",
                 "points": 1
             },
             {
-                "title": "Cognitive impairment( 1 point)",
+                "title": "Cognitive impairment",
                 "value": "cognitive_impairment",
                 "id": "fall_rist_assessment_cognitive_impairment",
                 "points": 1

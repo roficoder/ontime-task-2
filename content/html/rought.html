@@ -1,0 +1,114 @@
+<div ng-switch-when="radio">
+    <div class="checkbox-group">
+        <div ng-repeat="option in field.options">
+            <div class="option">
+                <input type="radio" ng-model="ctrl.selectedRadios[field.name]" id="{{option.id}}"
+                    ng-change="ctrl.radioChanged(field.name, option, ctrl.selectedRadios[field.name]); option.group ? ctrl.groupCaller(option.group_member, option.group_values):'' "
+                    ng-value="option.value" name="{{field.label}}">
+                <label for="{{option.id}}">{{option.title}}</label>
+            </div>
+            <div ng-if="ctrl.selectedRadios[field.name] === option.value && option.subfield">
+                <div ng-if="option.subfield.type != 'select'" class="subfield">
+                    <input class="subfield" type="{{option.subfield.type}}"
+                        ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])"
+                        placeholder="{{option.subfield.placeholder}}">
+                </div>
+                <div ng-if="option.subfield.type == 'select'" class="subfield">
+                    <select name="" id="" class="subfield" ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])">
+                        <option value="">Select</option>
+                        <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
+                            {{opt.title}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div ng-switch-when="checkbox">
+    <div class="oneselector" ng-if="field.oneSelector">
+        <input type="{{field.oneSelector.type}}" id="{{field.oneSelector.id}}"
+            placeholder="{{field.oneSelector.placeholder}}" ng-value="{{field.oneSelector.value}}"
+            ng-model="ctrl.oneSelectors[field.oneSelector.id]"
+            ng-change="ctrl.oneSelectorChanged(field.oneSelector.id, ctrl.oneSelectors[field.oneSelector.id], field)">
+        <label for="{{field.oneSelector.id}}">{{field.oneSelector.label}}</label>
+        <hr><br>
+    </div>
+
+    <div class="checkbox-group">
+        <div ng-repeat="option in field.options">
+
+            <div class="option" ng-if="!option.showwhen || showSibs[option.id]== option.id">
+                <!-- <tick obj="{{option.value}}" checked="{{option.checked}}"
+                    do-disable="{{oneSelectors[field.oneSelector.id]}}" input-id="{{option.id}}"
+                    on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
+                </tick> -->
+
+                <input type="checkbox" ng-disabled="ctrl.oneSelectors[field.oneSelector.id]" id="{{option.id}}"
+                    ng-model="checkBoxes[option.id]"
+                    ng-change="ctrl.handleCheckboxChange(ctrl.checkBoxes[option.id], field.dbType, field.name, option); option.subfield ? ctrl.showSubField(option):''">
+                <label for="{{option.id}}">{{option.title}}</label>
+            </div>
+
+            <!--SUB FIELDS-->
+            <div ng-if="ctrl.checkBoxSubs[option.id] === option.id && option.subfield">
+                <div ng-if="option.subfield.type != 'select'" class="subfield">
+                    <input type="{{option.subfield.type}}" class="subfield"
+                        ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])"
+                        placeholder="{{option.subfield.placeholder}}">
+                </div>
+                <div ng-if="option.subfield.type == 'select'" class="subfield">
+                    <select name="" id="" class="subfield" ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])">
+                        <option value="">Select</option>
+                        <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
+                            {{opt.title}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div ng-switch-when="radio" ng-switch-when="checkbox">
+    <div class="checkbox-group">
+        <div ng-repeat="option in field.options">
+            <div class="option">
+                <input type="{{field.type === 'radio' ? 'radio' : 'checkbox'}}"
+                    ng-model="field.type === 'radio' ? ctrl.selectedRadios[field.name] : ctrl.checkBoxes[option.id]"
+                    id="{{option.id}}"
+                    ng-change="field.type === 'radio' ? ctrl.radioChanged(field.name, option, ctrl.selectedRadios[field.name]) : ctrl.handleCheckboxChange(ctrl.checkBoxes[option.id], field.dbType, field.name, option); option.subfield ? (field.type === 'radio' ? ctrl.showSubField(option) : '') : ''"
+                    ng-value="option.value" name="{{field.label}}">
+                <label for="{{option.id}}">{{option.title}}</label>
+            </div>
+            <div
+                ng-if="field.type === 'radio' && ctrl.selectedRadios[field.name] === option.value && option.subfield || (field.type === 'checkbox' && ctrl.checkBoxes[option.id] === option.value && option.subfield)">
+                <div ng-if="option.subfield.type != 'select'" class="subfield">
+                    <input class="subfield" type="{{option.subfield.type}}"
+                        ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])"
+                        placeholder="{{option.subfield.placeholder}}">
+                </div>
+                <div ng-if="option.subfield.type == 'select'" class="subfield">
+                    <select class="subfield" ng-model="ctrl.subFields[option.subfield.name]"
+                        ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])">
+                        <option value="">Select</option>
+                        <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
+                            {{opt.title}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
