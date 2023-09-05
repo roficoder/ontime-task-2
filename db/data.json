@@ -47,7 +47,7 @@
         "type": "checkbox",
         "label": "Covid Screening",
         "name": "covid_screening",
-        "dbType": "object",
+        "dbType": "array",
         "id": "covid_screening",
         "required": true,
         "errorMsg": "Covid Screening is required",
@@ -382,9 +382,11 @@
         ]
     },
     {
-        "heading": "Neurological",
         "type": "checkbox",
+        "heading": "Neurological",
         "label": "Blood Pressure",
+        "dbType": "object",
+        "id": "blood_pressure",
         "name": "bp",
         "options": [
             {
@@ -409,6 +411,7 @@
         "type": "checkbox",
         "label": "Pulse",
         "name": "pulse",
+        "dbType": "object",
         "options": [
             {
                 "title": "Enter Value",
@@ -432,6 +435,7 @@
         "type": "checkbox",
         "label": "Respiratory",
         "name": "respiratory",
+        "dbType": "object",
         "options": [
             {
                 "title": "Enter Value",
@@ -455,6 +459,7 @@
         "type": "checkbox",
         "label": "TEMP",
         "name": "temperature",
+        "dbType": "object",
         "options": [
             {
                 "title": "Enter Value",
@@ -491,6 +496,7 @@
         "type": "checkbox",
         "label": "Weight",
         "name": "weight",
+        "dbType": "object",
         "options": [
             {
                 "title": "Enter Value",
@@ -583,7 +589,7 @@
         "type": "checkbox",
         "label": "Neurological",
         "name": "neurological",
-        "dbType": "array",
+        "dbType": "object",
         "oneSelector": {
             "type": "checkbox",
             "label": "WNL (No issues of needs identified)",
@@ -1260,8 +1266,9 @@
     {
         "type": "checkbox",
         "label": "Meals prepared by",
+        "name": "meals_prepared_by",
         "id": "meals_prepared_by",
-        "dbType": "array",
+        "dbType": "object",
         "options": [
             {
                 "title": "Patient",

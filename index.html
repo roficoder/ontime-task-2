@@ -33,7 +33,7 @@
         <form ng-submit="submitForm()" name="myForm" class="form">
             <div ng-repeat="field in formDefinition" class="form-field">
 
-                <h3 ng-if="field.heading">{{field.heading}}</h3>
+                <h3 ng-if="field.heading" class="heading">{{field.heading}}</h3>
 
                 <h3 class="field-label">{{ field.label }}</h3>
 
@@ -76,7 +76,9 @@
                                             placeholder="{{option.subfield.placeholder}}">
                                     </div>
                                     <div ng-if="option.subfield.type == 'select'" class="subfield">
-                                        <select name="" id="" class="subfield">
+                                        <select name="" id="" class="subfield"
+                                            ng-model="subFields[option.subfield.name]"
+                                            ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])">
                                             <option value="">Select</option>
                                             <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
                                                 {{opt.title}}
@@ -95,7 +97,7 @@
                             <input type="{{field.oneSelector.type}}" id="{{field.oneSelector.id}}"
                                 placeholder="{{field.oneSelector.placeholder}}" ng-value="{{field.oneSelector.value}}"
                                 ng-model="oneSelectors[field.oneSelector.id]"
-                                ng-change="oneSelectorChanged(field.oneSelector.id, oneSelectors[field.oneSelector.id], field.options)">
+                                ng-change="oneSelectorChanged(field.oneSelector.id, oneSelectors[field.oneSelector.id], field)">
                             <label for="{{field.oneSelector.id}}">{{field.oneSelector.label}}</label>
                             <hr><br>
                         </div>
@@ -107,13 +109,14 @@
                                     name="{{field.label}}"> -->
 
                                 <div class="option" ng-if="!option.showwhen || showSibs[option.id]== option.id">
-                                    <tick obj="{{option.value}}" checked="{{option.checked}}"
+                                    <!-- <tick obj="{{option.value}}" checked="{{option.checked}}"
                                         do-disable="{{oneSelectors[field.oneSelector.id]}}" input-id="{{option.id}}"
                                         on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
-                                    </tick>
+                                    </tick> -->
 
-                                    <!-- <input type="checkbox" id="{{option.id}}" ng-model="checkBoxes[option.value]"
-                                        ng-change="handleCheckboxChange('', field.dbType, field.name, option)"> -->
+                                    <input type="checkbox" ng-disabled="oneSelectors[field.oneSelector.id]"
+                                        id="{{option.id}}" ng-model="checkBoxes[option.id]"
+                                        ng-change="handleCheckboxChange(checkBoxes[option.id], field.dbType, field.name, option); option.subfield ? showSubField(option):''">
                                     <label for="{{option.id}}">{{option.title}}</label>
                                 </div>
 
@@ -126,7 +129,9 @@
                                             placeholder="{{option.subfield.placeholder}}">
                                     </div>
                                     <div ng-if="option.subfield.type == 'select'" class="subfield">
-                                        <select name="" id="" class="subfield">
+                                        <select name="" id="" class="subfield"
+                                            ng-model="subFields[option.subfield.name]"
+                                            ng-change="subFieldChanged(option.subfield.name, subFields[option.subfield.name])">
                                             <option value="">Select</option>
                                             <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
                                                 {{opt.title}}

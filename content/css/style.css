@@ -92,3 +92,10 @@ input[type="radio"]{
   accent-color: seagreen;
   line-height: 1;
 }
+
+.heading{
+  text-align: center;
+  border-block: thin solid grey;
+  padding-block: 0.25em;
+  font-size: 24px;
+}
