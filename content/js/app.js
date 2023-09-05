@@ -65,6 +65,17 @@ app.controller('DynamicFormController', function ($scope, $http) {
         }
     }
 
+    $scope.groupCaller = function (members, values) {
+        console.log(members, values);
+        const selectedRadios = $scope.selectedRadios;
+        members.forEach((member, index) => {
+            selectedRadios[member] = values[index]
+        })
+
+        console.log(selectedRadios);
+
+    }
+
     $scope.handleCheckboxChange = function (value, type, field, option) {
         const arr = $scope.formData[field];
         if (type == 'array') {
@@ -190,8 +201,8 @@ app.controller('DynamicFormController', function ($scope, $http) {
     };
 
     document.body.addEventListener('click', () => {
-        console.clear()
-        $scope.submitForm()
+        // console.clear()
+        // $scope.submitForm()
     })
 });
 

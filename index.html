@@ -55,7 +55,7 @@
 
                                 <div class="option">
                                     <input type="radio" ng-model="selectedRadios[field.name]" id="{{option.id}}"
-                                        ng-change="radioChanged(field.name, option, selectedRadios[field.name])"
+                                        ng-change="radioChanged(field.name, option, selectedRadios[field.name]); option.group ? groupCaller(option.group_member, option.group_values):'' "
                                         ng-value="option.value" name="{{field.label}}">
                                     <label for="{{option.id}}">{{option.title}}</label>
                                 </div>

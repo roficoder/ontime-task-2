@@ -1557,7 +1557,22 @@
             {
                 "title": "No",
                 "value": "no",
-                "id": "patient_pain_no"
+                "id": "patient_pain_no",
+                "group": true,
+                "group_member": [
+                    "noted_pain",
+                    "pain_scale",
+                    "pain_medication",
+                    "pain_aggravation",
+                    "pain_relief"
+                ],
+                "group_values": [
+                    "no",
+                    0,
+                    "no",
+                    "N/A",
+                    "no"
+                ]
             },
             {
                 "title": "unable to report",
@@ -1585,58 +1600,70 @@
         ]
     },
     {
-        "type": "select",
+        "type": "radio",
         "label": "Pain Scale",
         "name": "pain_scale",
         "errorMsg": "Please select one of the following assesesment type",
         "options": [
             {
                 "title": "Unable to Report",
-                "value": "unable_to_report"
+                "value": "unable_to_report",
+                "id": "pain_scale_unable_to_report"
             },
             {
                 "title": "0 - No Pain",
-                "value": 0
+                "value": 0,
+                "id": "pain_scale_0"
             },
             {
                 "title": "1",
-                "value": 1
+                "value": 1,
+                "id": "pain_scale_1"
             },
             {
                 "title": "2",
-                "value": 2
+                "value": 2,
+                "id": "pain_scale_2"
             },
             {
                 "title": "3",
-                "value": 3
+                "value": 3,
+                "id": "pain_scale_3"
             },
             {
                 "title": "4",
-                "value": 4
+                "value": 4,
+                "id": "pain_scale_4"
             },
             {
                 "title": "5",
-                "value": 5
+                "value": 5,
+                "id": "pain_scale_5"
             },
             {
                 "title": "6",
-                "value": 6
+                "value": 6,
+                "id": "pain_scale_6"
             },
             {
                 "title": "7",
-                "value": 7
+                "value": 7,
+                "id": "pain_scale_7"
             },
             {
                 "title": "8",
-                "value": 8
+                "value": 8,
+                "id": "pain_scale_8"
             },
             {
                 "title": "9",
-                "value": 9
+                "value": 9,
+                "id": "pain_scale_9"
             },
             {
                 "title": "10 - Severe Pain",
-                "value": 10
+                "value": 10,
+                "id": "pain_scale_10"
             }
         ]
     },
@@ -1659,7 +1686,7 @@
             },
             {
                 "title": "No",
-                "value": "pain_medication_no",
+                "value": "no",
                 "id": "pain_medication_no"
             }
         ]
