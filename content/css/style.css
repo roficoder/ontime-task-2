@@ -52,6 +52,7 @@
 .list-item, .total-score{
   display: grid;
   grid-template-columns: 1fr 80px;
+  align-items: center;
 }
 
 input[type="text"], 

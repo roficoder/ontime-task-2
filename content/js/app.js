@@ -47,23 +47,27 @@ app.controller('DynamicFormController', function ($scope, $http) {
         })
     }
 
-    $scope.listCheckChanged = function (check, points, id, field) {
+    $scope.listCheckChanged = function (check, option, field) {
         const listChecks = $scope.listChecks;
         const scores = $scope.scores;
+        const formDataListChecks = $scope.formData[field.name]
 
-
-        if (id in listChecks) {
-            delete listChecks[id];
-            scores[field] = scores[field] - points
+        if (option.value in listChecks) {
+            delete listChecks[option.value];
+            scores[field.name] = scores[field.name] - option.points
         }
         else {
-            listChecks[id] = check;
-            if (field in scores) {
-                scores[field] = scores[field] + points
+            listChecks[option.value] = check;
+            if (field.name in scores) {
+                scores[field.name] = scores[field.name] + option.points
             } else {
-                scores[field] = points;
+                scores[field.name] = option.points;
             }
+            formDataListChecks[option.value] = check
+            formDataListChecks[field.total] = scores[field.name]
         }
+
+        console.log(listChecks, check);
     }
 
     $scope.groupCaller = function (members, values) {
@@ -156,7 +160,7 @@ app.controller('DynamicFormController', function ($scope, $http) {
             arr[id] = true
             $scope.formData[field.name] = arr
             field.options.forEach(option => {
-                $scope.checkBoxes[option.value] = false
+                $scope.checkBoxes[option.id] = false
                 delete $scope.checkBoxSubs[option.id]
                 if (option.subfield?.name in $scope.subFields)
                     $scope.subFieldChanged(option.subfield?.name, '', true)
@@ -171,6 +175,8 @@ app.controller('DynamicFormController', function ($scope, $http) {
                     $scope.subFieldChanged(option.subfield?.name, '', true)
             })
         }
+
+        console.log($scope.checkBoxes);
     }
 
     $scope.subFieldChanged = function (groupName, value, check) {

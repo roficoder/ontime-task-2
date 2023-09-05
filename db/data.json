@@ -1181,7 +1181,7 @@
                 "id": "oral_comments",
                 "subfield": {
                     "type": "text",
-                    "name": "oral_comments",
+                    "name": "oral_comments_value",
                     "value": "oral_comments_value",
                     "placeholder": "Type here..."
                 }
@@ -1192,7 +1192,7 @@
         "type": "checkbox",
         "label": "Diet",
         "name": "diet",
-        "dbType": "array",
+        "dbType": "object",
         "options": [
             {
                 "title": "Regular",
@@ -1332,6 +1332,7 @@
         "label": "Nutritional Risk/Assessment",
         "name": "nutritional_risks",
         "dbType": "object",
+        "total": "total_score",
         "options": [
             {
                 "title": "On a medically prescribed diet",
