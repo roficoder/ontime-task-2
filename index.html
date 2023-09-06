@@ -66,7 +66,7 @@
                                     ng-if="field.subtype == 'radio'? ctrl.selectedRadios[field.name] == option.value && option.subfield : ctrl.checkBoxSubs[option.id] === option.id && option.subfield">
                                     <div ng-if="option.subfield.type != 'select'" class="subfield">
                                         <input class="subfield" type="{{option.subfield.type}}"
-                                            ng-required="option.subfield.required"
+                                            name="{{option.subfield.name}}" ng-required="option.subfield.required"
                                             ng-model="ctrl.subFields[option.subfield.name]"
                                             ng-chang="field.subtype == 'radio' ? ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name]) : ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])"
                                             placeholder="{{option.subfield.placeholder}}">
@@ -86,9 +86,8 @@
 
                                     <div class="error"
                                         ng-if="option.subfield.type == 'number' || option.subfield.type == 'text' || option.subfield.type == 'date' || option.subfield.type == 'select'">
-                                        Please enter some value
                                         <p class="error-div"
-                                            ng-if="option.subfield.required && ctrl.subFields[option.subfield.name]  && ctrl.errorFlag">
+                                            ng-if="option.subfield.required && myForm[option.subfield.name].$error.required && ctrl.errorFlag">
                                             Please enter some value
                                         </p>
                                         <!-- && myForm[field.name].$touched -->
