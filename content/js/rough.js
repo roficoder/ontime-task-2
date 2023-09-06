@@ -19,7 +19,30 @@ ctrl.makeFormData = function (data) {
 }
 
 
-
+ctrl.oneSelectorChanged = function (id, value, field) {
+    ctrl.oneSelectors[field.name] = true;
+    let arr;
+    if (value) {
+        arr = {}
+        arr[id] = true
+        ctrl.formData[field.name] = arr
+        field.options.forEach(option => {
+            ctrl.checkBoxes[option.id] = false
+            console.log(ctrl.checkBoxes);
+            delete ctrl.checkBoxSubs[option.id]
+            if (option.subfield?.name in ctrl.subFields)
+                ctrl.subFieldChanged(option.subfield?.name, '', true)
+        })
+    } else {
+        ctrl.formData[field.name] = {}
+        const optionsArr = ctrl.formData[field.name];
+        field.options.forEach(option => {
+            optionsArr[option.value] = false;
+            if (option.subfield?.name in ctrl.subFields)
+                ctrl.subFieldChanged(option.subfield?.name, '', true)
+        })
+    }
+}
 
 
 ctrl.listCheckChanged = function (value, option, field) {

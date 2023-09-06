@@ -2,6 +2,14 @@
   --main: rgba(0, 0, 0, 0.603);
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  /* scroll-behavior: smooth; */
+}
+
 .form{
   width: min(1280px, 100%);
   margin: auto;
@@ -38,7 +46,7 @@
 
 .checkbox-group .option{
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 0.25em;
   /* height: 16px; */
 }
@@ -66,6 +74,12 @@ input[type="number"]
 
 input{
   font-size: 14px;
+}
+
+input[type="date"]{
+  padding: 0.5em;
+  width: min(95%, 300px);
+  margin-top: 0.5em;
 }
 
 input[type="text"].subfield, 
@@ -99,4 +113,9 @@ input[type="radio"]{
   border-block: thin solid grey;
   padding-block: 0.25em;
   font-size: 24px;
+}
+
+.listing-details{
+  padding: 2em;
+    background: grey;
 }

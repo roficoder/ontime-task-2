@@ -18,7 +18,7 @@
 
     <div ng-controller="DynamicFormController as ctrl">
 
-        <form ng-submit="ctrl.submitForm()" name="myForm" class="form">
+        <form name="myForm" class="form">
             <div ng-repeat="field in ctrl.formDefinition" class="form-field">
                 <h3 ng-if="field.heading" class="heading">{{field.heading}}</h3>
                 <h3 class="field-label">{{ field.label }}</h3>
@@ -33,6 +33,76 @@
                     <input type="{{ field.type }}" placeholder="{{field.placeholder}}" ng-switch-default
                         ng-model="ctrl.formData[field.name]" name="{{field.name}}" ng-required="field.required">
 
+                    <div ng-switch-when="radiocheck">
+                        <div class="oneselector" ng-if="field.oneSelector">
+                            <input type="{{field.oneSelector.type}}" id="{{field.oneSelector.id}}"
+                                placeholder="{{field.oneSelector.placeholder}}" ng-value="{{field.oneSelector.value}}"
+                                ng-model="ctrl.oneSelectors[field.oneSelector.id]"
+                                ng-change="ctrl.oneSelectorChanged(field.oneSelector.id, ctrl.oneSelectors[field.oneSelector.id], field)">
+                            <label for="{{field.oneSelector.id}}">{{field.oneSelector.label}}</label>
+                            <hr><br>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <div ng-repeat="option in field.options">
+                                <div class="option" ng-if="field.subtype == 'radio'">
+                                    <input type="radio" checked ng-model="ctrl.selectedRadios[field.name]"
+                                        id="{{option.id}}"
+                                        ng-change="ctrl.radioChanged(field.name, option, ctrl.selectedRadios[field.name]); option.group ? ctrl.groupCaller(option.group_member, option.group_values):'' "
+                                        ng-value="option.value" name="{{field.label}}">
+                                    <label for="{{option.id}}">{{option.title}}</label>
+                                </div>
+
+                                <div class="option"
+                                    ng-if="(!option.showwhen || showSibs[option.id]== option.id) && field.subtype == 'checkbox'">
+                                    <input type="checkbox" ng-checked="option.checked"
+                                        ng-disabled="ctrl.oneSelectors[field.oneSelector.id]" id="{{option.id}}"
+                                        ng-model="ctrl.checkBoxes[option.id]"
+                                        ng-change="ctrl.handleCheckboxChange(ctrl.checkBoxes[option.id], field.dbType, field.name, option); option.subfield ? ctrl.showSubField(option):''">
+                                    <label for="{{option.id}}">{{option.title}}</label>
+                                </div>
+
+                                <div
+                                    ng-if="field.subtype == 'radio'? ctrl.selectedRadios[field.name] == option.value && option.subfield : ctrl.checkBoxSubs[option.id] === option.id && option.subfield">
+                                    <div ng-if="option.subfield.type != 'select'" class="subfield">
+                                        <input class="subfield" type="{{option.subfield.type}}"
+                                            ng-required="option.subfield.required"
+                                            ng-model="ctrl.subFields[option.subfield.name]"
+                                            ng-chang="field.subtype == 'radio' ? ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name]) : ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])"
+                                            placeholder="{{option.subfield.placeholder}}">
+                                    </div>
+                                    <div ng-if="option.subfield.type == 'select'" class="subfield">
+                                        <select name="" id="" class="subfield"
+                                            ng-model="ctrl.subFields[option.subfield.name]"
+                                            ng-change="ctrl.subFieldChanged(option.subfield.name, ctrl.subFields[option.subfield.name])">
+                                            <option value="">Select</option>
+                                            <option ng-repeat="opt in option.subfield.options" ng-value="opt.value">
+                                                {{opt.title}}
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!--================== VALIDATIONS ====================-->
+
+                                    <div class="error"
+                                        ng-if="option.subfield.type == 'number' || option.subfield.type == 'text' || option.subfield.type == 'date' || option.subfield.type == 'select'">
+                                        Please enter some value
+                                        <p class="error-div"
+                                            ng-if="option.subfield.required && ctrl.subFields[option.subfield.name]  && ctrl.errorFlag">
+                                            Please enter some value
+                                        </p>
+                                        <!-- && myForm[field.name].$touched -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <!-- 
                     <div ng-switch-when="radio">
                         <div class="checkbox-group">
                             <div ng-repeat="option in field.options">
@@ -77,20 +147,12 @@
 
                         <div class="checkbox-group">
                             <div ng-repeat="option in field.options">
-
                                 <div class="option" ng-if="!option.showwhen || showSibs[option.id]== option.id">
-                                    <!-- <tick obj="{{option.value}}" checked="{{option.checked}}"
-                                            do-disable="{{oneSelectors[field.oneSelector.id]}}" input-id="{{option.id}}"
-                                            on-checkbox-change="handleCheckboxChange(value, field.dbType, field.name, option)">
-                                        </tick> -->
-
                                     <input type="checkbox" ng-disabled="ctrl.oneSelectors[field.oneSelector.id]"
                                         id="{{option.id}}" ng-model="checkBoxes[option.id]"
                                         ng-change="ctrl.handleCheckboxChange(ctrl.checkBoxes[option.id], field.dbType, field.name, option); option.subfield ? ctrl.showSubField(option):''">
                                     <label for="{{option.id}}">{{option.title}}</label>
                                 </div>
-
-                                <!--SUB FIELDS-->
                                 <div ng-if="ctrl.checkBoxSubs[option.id] === option.id && option.subfield">
                                     <div ng-if="option.subfield.type != 'select'" class="subfield">
                                         <input type="{{option.subfield.type}}" class="subfield"
@@ -111,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -129,6 +191,9 @@
                             <p>Total Score</p>
                             <div class="total-score">{{ctrl.formData[field.name][field.total]}}</div>
                         </div>
+                        <div class="listing-details">
+                            <div ng-bind-html="ctrl.sanitizeHtml(field.details)"></div>
+                        </div>
                     </div>
 
                     <!--================== NESTED RADIOS ====================-->
@@ -138,31 +203,35 @@
                 </div>
 
                 <!--================== ERROR ====================-->
-                <!-- <div class="error">
-                    <div ng-if="field.type == 'checkbox' && field.dbType == 'array'">
-                        <p ng-if="field.required && formData[field.name] | isEmpty">
+                <div class="error">
+
+                    <div ng-if="field.subtype == 'checkbox' && (field.dbType == 'array' || field.dbType == 'object')">
+                        <p class="error-div"
+                            ng-if="field.required && (ctrl.formData[field.name] | isEmptyOrAllFalse) && ctrl.errorFlag">
                             {{field.errorMsg}}
                         </p>
                     </div>
 
-                    <div ng-if="field.type == 'checkbox' && field.dbType == 'object'">
-                        <p ng-if="field.required && formData[field.name] | isEmpty">
+                    <div ng-if="field.subtype == 'radio' && field.required">
+                        <p class="error-div" ng-if="!ctrl.selectedRadios[field.name] && ctrl.errorFlag">
                             {{field.errorMsg}}
                         </p>
                     </div>
 
                     <div
                         ng-if="field.type == 'number' || field.type == 'text' || field.type == 'date' || field.type == 'select'">
-                        <p ng-if="field.required && myForm[field.name].$error.required && myForm[field.name].$touched">
+                        <p class="error-div"
+                            ng-if="field.required && myForm[field.name].$error.required  && ctrl.errorFlag">
                             {{field.errorMsg}}
                         </p>
+                        <!-- && myForm[field.name].$touched -->
                     </div>
 
-                </div> -->
+                </div>
 
                 <div class="line"></div>
             </div>
-            <button type="submit">Submit</button>
+            <button ng-click="ctrl.submitForm()">Submit</button>
         </form>
     </div>
 

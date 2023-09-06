@@ -2,7 +2,7 @@ var app = angular.module('myApp', []);
 
 
 
-app.controller('DynamicFormController', function ($http) {
+app.controller('DynamicFormController', function ($http, $sce, $window, $timeout) {
     'use strict';
 
     var ctrl = this;
@@ -10,52 +10,70 @@ app.controller('DynamicFormController', function ($http) {
     ctrl.formData = {};
     ctrl.formDefinition = []
     ctrl.selectedRadios = {};
-    ctrl.subFields = {};
-    ctrl.checkBoxSubs = {};
+    ctrl.subFields = {}; // Responsible for sending data in FormData
+    ctrl.checkBoxSubs = {}; // Keeps track of showing subfields
     ctrl.checkBoxes = {}
     ctrl.showSibs = {};
     ctrl.oneSelectors = {}
     ctrl.listChecks = {}
     ctrl.previousRadio = {}
     ctrl.previousChecks = {}
+    ctrl.fieldDetailsObj = {}
+    ctrl.errorFlag = false
 
-    const url = 'db/data.json'
+    const url = 'db/data2.json'
 
     $http.get(url)
         .then(function (response) {
             ctrl.formDefinition = response.data
-            ctrl.makeFormData(ctrl.formDefinition)
+            makeFormData(ctrl.formDefinition)
         })
         .catch(function (error) {
             console.error('Error fetching JSON data:', error);
         });
 
 
-    ctrl.makeFormData = function (data) {
+    function makeFormData(data) {
         data.forEach(item => {
-            switch (item.dbType || item.type) {
-                case 'array':
-                    ctrl.formData[item.name] = [];
-                    break;
-                case 'object':
-                    ctrl.formData[item.name] = {};
-                    item.options.forEach(option => {
-                        ctrl.formData[item.name][option.value] = false;
-                    });
-                    break;
+            switch (item.type) {
                 case 'text':
                 case 'date':
                 case 'select':
-                case 'radio':
                     ctrl.formData[item.name] = '';
                     break;
                 case 'number':
                     ctrl.formData[item.name] = 0;
                     break;
+                case 'radiocheck':
+                    selectRadios(item)
                 default:
+                    // ctrl.formData[item.name] = '';
                     break;
             }
         });
+    };
+
+    function selectRadios(field) {
+        if (field.subtype == 'radio') {
+            ctrl.formData[field.name] = ''
+            const selected = field.options.find(option => option.selected);
+            if (selected)
+                ctrl.selectedRadios[field.name] = selected.value
+        }
+        if (field.subtype == 'checkbox') {
+            if (field.dbType === 'array') {
+                ctrl.formData[field.name] = [];
+                return
+            }
+            ctrl.formData[field.name] = {};
+            field.options.forEach(option => {
+                ctrl.formData[field.name][option.value] = false;
+            });
+        }
+    }
+
+    ctrl.sanitizeHtml = function (htmlContent) {
+        return $sce.trustAsHtml(htmlContent);
     };
 
     ctrl.listCheckChanged = function (value, option, field) {
@@ -85,10 +103,10 @@ app.controller('DynamicFormController', function ($http) {
 
     }
 
-    ctrl.handleCheckboxChange = function (value, type, field, option) {
+    ctrl.handleCheckboxChange = function (value, type, fieldName, option) {
 
         /*================   SETTING CHECKBOX ARRAY OR OBJECT IN FORMDATA   ===================*/
-        const arr = ctrl.formData[field];
+        const arr = ctrl.formData[fieldName];
         if (type == 'array') {
             const index = arr.indexOf(option.value);
             if (index != -1) {
@@ -99,6 +117,7 @@ app.controller('DynamicFormController', function ($http) {
         }
         else if (type == 'object') {
             arr[option.value] = value
+
         }
 
         /*================   SHOWING SIBLINGS   ===================*/
@@ -120,26 +139,23 @@ app.controller('DynamicFormController', function ($http) {
 
 
     ctrl.oneSelectorChanged = function (id, value, field) {
-        ctrl.oneSelectors[field.name] = true;
-        let arr;
         if (value) {
-            arr = {}
-            arr[id] = true
-            ctrl.formData[field.name] = arr
+            ctrl.formData[field.name] = { [id]: true }
             field.options.forEach(option => {
                 ctrl.checkBoxes[option.id] = false
-                delete ctrl.checkBoxSubs[option.id]
-                if (option.subfield?.name in ctrl.subFields)
-                    ctrl.subFieldChanged(option.subfield?.name, '', true)
+                if (option.id in ctrl.checkBoxSubs)
+                    ctrl.showSubField(option)
+                // delete ctrl.checkBoxSubs[option.id]
+                // if (option.subfield?.name in ctrl.subFields)
+                //     ctrl.subFieldChanged(option.subfield?.name, '', true)
             })
         } else {
-            // checkBox = {};
             ctrl.formData[field.name] = {}
             const optionsArr = ctrl.formData[field.name];
             field.options.forEach(option => {
                 optionsArr[option.value] = false;
-                if (option.subfield?.name in ctrl.subFields)
-                    ctrl.subFieldChanged(option.subfield?.name, '', true)
+                // if (option.subfield?.name in ctrl.subFields)
+                //     ctrl.subFieldChanged(option.subfield?.name, '', true)
             })
         }
     }
@@ -150,25 +166,21 @@ app.controller('DynamicFormController', function ($http) {
         const checkBoxSubsArr = ctrl.checkBoxSubs;
         if (option.id in checkBoxSubsArr) {
             delete checkBoxSubsArr[option.id];
-            if (option.subfield?.name in subFields)
-                ctrl.subFieldChanged(option.subfield?.name, '', true)
+            // if (option.subfield?.name in subFields)
+            ctrl.subFieldChanged(option.subfield?.name, '', true)
         }
         else {
             checkBoxSubsArr[option.id] = option.id;
             ctrl.subFieldChanged(option.subfield?.name)
         }
-        console.log(ctrl.checkBoxSubsArr);
-
     }
 
-    ctrl.subFieldChanged = function (groupName, value, check) {
+    ctrl.subFieldChanged = function (subfieldName, value, check) {
         const subFields = ctrl.subFields;
-        if (groupName in subFields && check)
-            delete subFields[groupName]
+        if (subfieldName in subFields && check)
+            delete subFields[subfieldName]
         else
-            subFields[groupName] = value ? value : '';
-
-        // console.log(subFields);
+            subFields[subfieldName] = value ? value : '';
     }
 
     ctrl.checkBoxSubChanged = function (groupName, value) {
@@ -213,17 +225,30 @@ app.controller('DynamicFormController', function ($http) {
     }
 
     ctrl.submitForm = function () {
+        console.log("Testing");
+        ctrl.errorFlag = true;
+        const errorDv = $window.document.querySelector('.error-div')
+        if (errorDv) {
+            $timeout(function () {
+                $window.scrollTo(0, errorDv.offsetTop - 120);
+            });
+        }
+
         const obj = { ...ctrl.formData, ...ctrl.selectedRadios, ...ctrl.subFields }
+        console.log({
+            "formData": ctrl.formData,
+            "selectedRadios": ctrl.selectedRadios,
+            "subFields": ctrl.subFields
+        });
+
         console.log(obj);
     };
 
-    document.body.addEventListener('click', () => {
-        console.clear()
-        ctrl.submitForm()
-    })
+    // document.body.addEventListener('click', () => {
+    //     console.clear()
+    //     ctrl.submitForm()
+    // })
 });
-
-
 
 app.directive('tick', function () {
     return {
@@ -286,11 +311,16 @@ app.directive('radio', function () {
     }
 })
 
-app.filter('isEmpty', function () {
+
+app.filter('isEmptyOrAllFalse', function () {
     return function (input) {
-        if (angular.isArray(input) || angular.isObject(input)) {
-            return Object.keys(input).length === 0;
+        if (angular.isArray(input)) {
+            return input.length === 0;
+        } else if (angular.isObject(input)) {
+            return Object.values(input).every(function (value) {
+                return value === false;
+            });
         }
-        return true; // If input is not an array or object, consider it empty
+        return false;
     };
 });

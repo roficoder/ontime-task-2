@@ -3,12 +3,14 @@
         "type": "date",
         "label": "Visit Date",
         "name": "visit_date",
+        "required": true,
         "errorMsg": "Please select a specific date"
     },
     {
         "type": "select",
         "label": "Assesment Type",
         "name": "assesment_type",
+        "required": true,
         "errorMsg": "Please select one of the following assesesment type",
         "options": [
             {
@@ -26,7 +28,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Assessment Conducted",
         "name": "assessment_conducted",
         "id": "assesment_conducted",
@@ -34,7 +37,8 @@
             {
                 "title": "Field",
                 "value": "field",
-                "id": "assesment_conducted_field"
+                "id": "assesment_conducted_field",
+                "selected": true
             },
             {
                 "title": "Telephonic",
@@ -44,10 +48,11 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Covid Screening",
         "name": "covid_screening",
-        "dbType": "array",
+        "dbType": "object",
         "id": "covid_screening",
         "required": true,
         "errorMsg": "Covid Screening is required",
@@ -85,13 +90,15 @@
                     "type": "text",
                     "name": "covid_screening_other_value",
                     "value": "covid_screening_other_value",
-                    "placeholder": "Type here ..."
+                    "placeholder": "Type here ...",
+                    "required": true
                 }
             }
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Covid Vaccine Status",
         "name": "covid_vaccine",
         "id": "covid_vaccine",
@@ -100,6 +107,7 @@
                 "title": "Yes - Date if known",
                 "value": "yes",
                 "id": "covid_vaccine_yes",
+                "selected": true,
                 "subfield": {
                     "type": "date",
                     "label": "",
@@ -114,7 +122,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "HX of Covid",
         "name": "hx_covid",
         "id": "hx_covid",
@@ -127,17 +136,18 @@
             {
                 "title": "No",
                 "value": "no",
-                "id": "hx_covid_no"
+                "id": "hx_covid_no",
+                "selected": true
             }
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Aide",
         "name": "aide",
-        "dbType": "object",
         "required": true,
-        "errorMsg": "Covid Screening is required",
+        "errorMsg": "Aide field is required",
         "options": [
             {
                 "title": "Present during assessment",
@@ -173,12 +183,16 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
+        "name": "aide_education_completed",
         "required": true,
+        "errorMsg": "Please make sure to check this",
         "label": "Aide Covide Screening Education Complete",
+        "dbType": "object",
         "options": [
             {
-                "title": "Please make sure to check this",
+                "title": "Aide was instructed to conduct a daily symptom check before going to work. In case of any symptoms below, instructed not to report to and notify agency immediately: Temperature of 100.0 F (37.8 C) or higher, cough, shortness of breath and/or sore throat. Recheck of symptoms must occur every 8 hours while at work or between shifts if working for multiple patients. If any symptoms develop while at work, must isolate in the patient's home and notify agency immediately.",
                 "value": "aide_educ_complete",
                 "id": "aide_educ_complete",
                 "checked": true
@@ -186,7 +200,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Languages",
         "name": "languages",
         "dbType": "object",
@@ -215,7 +230,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Required Interpreter",
         "name": "required_interpreter",
         "id": "required_interpreter",
@@ -252,7 +268,8 @@
         "placeholder": "Emergency Contact Number"
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Emergency contact relationship",
         "name": "emergency_contact_relation",
         "options": [
@@ -274,7 +291,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Lives with",
         "name": "live_with",
         "options": [
@@ -301,7 +319,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Pets",
         "name": "pets",
         "options": [
@@ -330,7 +349,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "DNR",
         "name": "dnr",
         "options": [
@@ -365,7 +385,8 @@
         "placeholder": "Hospice Number"
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Can patient be left alone ? ( Note , TBI, Split Shift, and NHTD cases must never be left alone) ",
         "name": "can_patient_be_alone",
         "options": [
@@ -382,7 +403,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "heading": "Neurological",
         "label": "Blood Pressure",
         "dbType": "object",
@@ -408,7 +430,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Pulse",
         "name": "pulse",
         "dbType": "object",
@@ -432,7 +455,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Respiratory",
         "name": "respiratory",
         "dbType": "object",
@@ -456,7 +480,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "TEMP",
         "name": "temperature",
         "dbType": "object",
@@ -493,7 +518,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Weight",
         "name": "weight",
         "dbType": "object",
@@ -530,7 +556,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Grasp Right",
         "name": "grasp_right",
         "options": [
@@ -558,7 +585,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Grasp Left",
         "name": "grasp_left",
         "options": [
@@ -586,7 +614,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Neurological",
         "name": "neurological",
         "dbType": "object",
@@ -683,7 +712,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Cardiopulmonary",
         "dbType": "array",
         "name": "cardiopulmonary",
@@ -819,7 +849,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Vision",
         "name": "vision",
         "dbType": "array",
@@ -864,7 +895,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Hearing",
         "name": "hearing",
         "dbType": "array",
@@ -904,7 +936,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Musculoskeletal",
         "name": "musculoskeletal",
         "oneSelector": {
@@ -1000,7 +1033,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Endocrine",
         "name": "endocrine",
         "oneSelector": {
@@ -1068,7 +1102,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Gastrointestinal",
         "name": "gastrointestinal",
         "oneSelector": {
@@ -1144,7 +1179,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Oral",
         "name": "oral",
         "oneSelector": {
@@ -1189,7 +1225,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Diet",
         "name": "diet",
         "dbType": "object",
@@ -1264,7 +1301,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Meals prepared by",
         "name": "meals_prepared_by",
         "id": "meals_prepared_by",
@@ -1299,7 +1337,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Feeding",
         "name": "feeding",
         "dbType": "array",
@@ -1394,10 +1433,12 @@
                 "id": "nutritional_risks_takes_more_than_2_drinks",
                 "points": 1
             }
-        ]
+        ],
+        "details": "<h3>Legend for Nutritional/Risk Assessment</h3> <br> <p>0-2: No Risk, 3-5: Moderate Risk, 6 or more: High Risk</p>  <p>Follow up if High Risk</p>"
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Genitourinary",
         "name": "genitourinary",
         "id": "genitourinary",
@@ -1457,7 +1498,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Skin",
         "name": "skin",
         "id": "skin",
@@ -1540,7 +1582,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Does the patient have pain ?",
         "name": "patient_pain",
         "id": "does_patient_pain",
@@ -1584,7 +1627,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Does PCG or Aide note pain ?",
         "name": "noted_pain",
         "id": "noted_pain",
@@ -1602,7 +1646,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Pain Scale",
         "name": "pain_scale",
         "errorMsg": "Please select one of the following assesesment type",
@@ -1670,7 +1715,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Are there any pain medications ?",
         "name": "pain_medications",
         "id": "pain_medications",
@@ -1697,7 +1743,8 @@
         "label": "Describe Pain",
         "value": "describe_pain",
         "name": "describe_pain",
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "options": [
             {
                 "title": "Unable to Report",
@@ -1743,7 +1790,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "What aggravates the pain ?",
         "name": "pain_aggravation",
         "id": "pain_aggravation",
@@ -1767,7 +1815,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Is pain relief adequate ?",
         "name": "pain_relief",
         "id": "pain_relief",
@@ -1785,7 +1834,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Funnctional Assesment",
         "name": "functional_assessment",
         "id": "functional_assessment",
@@ -1803,7 +1853,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Functional Limitations",
         "name": "functional_limitations",
         "id": "functional_limitations",
@@ -1933,10 +1984,12 @@
                 "id": "fall_rist_assessment_cognitive_impairment",
                 "points": 1
             }
-        ]
+        ],
+        "details": "Scores more than 4 are at high risk"
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Has the patient had a recent fall ?",
         "name": "recent_fall",
         "id": "recent_fall",
@@ -1960,7 +2013,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Allergies",
         "name": "allergies",
         "id": "allergies",
@@ -1984,7 +2038,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Is client able to administrate own medications",
         "name": "client_can_administrate_medicine",
         "id": "client_can_administrate_medicine",
@@ -2002,7 +2057,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "DOES CLIENT REQUIRE MEDICATION BOX SET-UP/PREPOUR?",
         "name": "client_needs_medications",
         "id": "client_needs_medications",
@@ -2020,7 +2076,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Is client compliant with medication regimen??",
         "name": "client_compliant_with_regimen",
         "id": "client_compliant_with_regimen",
@@ -2038,7 +2095,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Who was taught ?",
         "name": "who_was_taught",
         "id": "who_was_taught",
@@ -2072,7 +2130,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "How were instructions provided",
         "name": "instructions_provided",
         "id": "instructions_provided",
@@ -2095,7 +2154,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "RESPONSE",
         "name": "response",
         "id": "response",
@@ -2124,7 +2184,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Aide educated to remind patient to take medications",
         "name": "educated_to_remind_patient",
         "id": "educated_to_remind_patient",
@@ -2137,7 +2198,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Season flu Immunization",
         "name": "season_flu_immunization",
         "id": "season_flu_immunization",
@@ -2166,7 +2228,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Pneumococcal Vaccine(65+) ",
         "name": "pneumococcal_vaccine",
         "id": "pneumococcal_vaccine",
@@ -2195,7 +2258,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Eye Exam",
         "name": "eye_exam",
         "id": "eye_exam",
@@ -2224,7 +2288,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Hearing Exam",
         "name": "hearing_exam",
         "id": "hearing_exam",
@@ -2253,7 +2318,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Denta; Exam",
         "name": "dental_exam",
         "id": "dental_exam",
@@ -2282,7 +2348,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Mammogram Or Breast Exam - within 2 years for women of 50+ or HX",
         "name": "breast_exam",
         "id": "breast_exam",
@@ -2316,7 +2383,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Last PCP visit",
         "name": "last_pcp_visit",
         "id": "last_pcp_visit",
@@ -2340,7 +2408,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Next PCP visit",
         "name": "next_pcp_visit",
         "id": "next_pcp_visit",
@@ -2364,7 +2433,8 @@
         ]
     },
     {
-        "type": "radio",
+        "type": "radiocheck",
+        "subtype": "radio",
         "label": "Any recent hospitalizations within 1 month ?",
         "name": "recent_hospitalizations",
         "id": "recent_hospitalizations",
@@ -2389,7 +2459,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Educated Paint/PCG on benefits of utilizing urgent care rather than ER for minor issues",
         "name": "education_on_benefits",
         "id": "education_on_benefits",
@@ -2402,7 +2473,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "DME/Supplies",
         "name": "dme_supplies",
         "id": "dme_supplies",
@@ -2506,7 +2578,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Other Environmental",
         "name": "other_environmental",
         "id": "other_environmental",
@@ -2547,7 +2620,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Live in Accomodation",
         "name": "live_in_accomodation",
         "id": "live_in_accomodation",
@@ -2575,7 +2649,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Special Precations",
         "name": "special_precations",
         "id": "special_precations",
@@ -2653,7 +2728,8 @@
         ]
     },
     {
-        "type": "checkbox",
+        "type": "radiocheck",
+        "subtype": "checkbox",
         "label": "Assesment Summary Checklist",
         "name": "assesment_summary_checklist",
         "id": "assesment_summary_checklist",
