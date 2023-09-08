@@ -7,6 +7,11 @@ app.controller('DynamicFormController', function ($http, $sce, $window, $timeout
 
     var ctrl = this;
 
+    ctrl.resetForm = function () {
+        $rootScope.isFormDirty = false;
+        ctrl.getFormDataCall()
+    };
+
     ctrl.formData = {};
     ctrl.formDefinition = []
     ctrl.selectedRadios = {};
@@ -324,3 +329,9 @@ app.filter('isEmptyOrAllFalse', function () {
         return false;
     };
 });
+
+
+ctrl.listRadioChanged = function (field, option, selectOption) {
+    const listField = ctrl.formData[field.name];
+    listField[option.value] = selectOption.value
+}

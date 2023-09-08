@@ -18,6 +18,15 @@
 
     <div ng-controller="DynamicFormController as ctrl">
 
+        <div class="row">
+            <div class="col-sm-12">
+                <button class="btn btn-info btn-single gray_bt pull-right" ng-click="editPatient.resetForm()"
+                    type="button">
+                    Reset To Default
+                </button>
+            </div>
+        </div>
+
         <form name="myForm" class="form">
             <div ng-repeat="field in ctrl.formDefinition" class="form-field">
                 <h3 ng-if="field.heading" class="heading">{{field.heading}}</h3>
@@ -239,3 +248,38 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+<div
+ng-if="field.subtype == 'checkbox' && (field.dbType == 'array' || field.dbType == 'object')">
+<p class="error-div"
+    ng-if="field.required && (editPatient.formData[field.name] | isEmptyOrAllFalse) && editPatient.errorFlag">
+    {{field.errormsg}}
+</p>
+</div>
+
+<div ng-if="field.subtype == 'radio' && field.required">
+    <p class="error-div"
+        ng-if="!editPatient.selectedRadios[field.name] && editPatient.errorFlag">
+        {{field.errormsg}}
+    </p>
+</div>
+
+<div class="error row">
+    <div class="col-sm-9 pull-right">
+        <div
+            ng-if="field.type == 'number' || field.type == 'text' || field.type == 'date' || field.type == 'select'">
+            <p class="error-div"
+                ng-if="field.required && myForm[field.name].$error.required  && editPatient.errorFlag">
+                {{field.errormsg}}
+            </p>
+        </div>
+    </div>
+</div>
